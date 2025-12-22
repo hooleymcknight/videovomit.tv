@@ -52,8 +52,8 @@ body {
   33.33%,
   43.33%,
   66.67%,
-  76.67%,
-  100.00% {
+  76.67% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }
@@ -78,8 +78,8 @@ body {
   33.33%,
   41.67%,
   66.67%,
-  75.00%,
-  100.00% {
+  75.00% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }
@@ -104,8 +104,8 @@ body {
   33.33%,
   40.48%,
   66.67%,
-  73.81%,
-  100.00% {
+  73.81% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }
@@ -130,8 +130,8 @@ body {
   33.33%,
   39.58%,
   66.67%,
-  72.92%,
-  100.00% {
+  72.92% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }
@@ -156,8 +156,8 @@ body {
   33.33%,
   38.89%,
   66.67%,
-  72.22%,
-  100.00% {
+  72.22% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }
@@ -182,8 +182,8 @@ body {
   33.33%,
   38.33%,
   66.67%,
-  71.67%,
-  100.00% {
+  71.67% {
+  /* 100.00% { */
     transform: none;
     filter: hue-rotate(0) drop-shadow(0 0 0 transparent);
   }

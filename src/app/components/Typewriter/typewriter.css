@@ -1,0 +1,59 @@
+/* cyan: #56fff2 */
+/* magenta: #bd09f3 */
+
+.typewriter h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid #bd09f3; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+        typing 3.5s steps(60, end),
+        blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #bd09f3; }
+}
+
+/** =============== take 2 ====================== */
+
+.line-1{
+    font-family: 'VCR';
+    position: relative;
+    top: 50%;  
+    width: 294px;
+    margin: 0 auto;
+    /* border-right: 2px solid rgba(255,255,255,.75); */
+    border-right: 2px solid #bd09f3;
+    font-size: 180%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+
+/* Animation */
+.anim-typewriter{
+    --steps: 14;
+    animation: typewriter 4s steps(var(--steps)) 5s 1 normal both,
+             blinkTextCursor 500ms steps(var(--steps)) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  /* to{width: 24em;} */
+  to{width: 294px;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: #bd09f3;}
+  to{border-right-color: transparent;}
+}
+

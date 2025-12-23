@@ -1,4 +1,5 @@
 import Image from "next/image";
+import './glitch.css';
 
 export default function Glitch() {
     return (
@@ -218,10 +219,6 @@ export default function Glitch() {
                     animationDuration: 8000 + 'ms',
                     animationDelay: 2 + 's',
                 }}></div>
-            </div>
-
-            <div className="debug">
-                <div className="code"></div>
             </div>
         </>
     );

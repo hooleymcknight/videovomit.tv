@@ -3,7 +3,7 @@ import Image from "next/image";
 import './vhs.css';
 import { useState, useEffect } from "react";
 
-function getHeight(){
+function getHeight() {
   return window.innerHeight
     || document.documentElement.clientHeight
     || document.body.clientHeight;

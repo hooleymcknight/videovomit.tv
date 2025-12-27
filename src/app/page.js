@@ -1,5 +1,5 @@
 'use client';
-import Glitch from './components/glitch/glitch';
+import Glitch from './components/Glitch/glitch';
 import GlitchText from './components/GlitchText/glitchText';
 import Typewriter from './components/Typewriter/typewriter';
 import { useSession } from "./SessionProvider";
@@ -14,6 +14,18 @@ export default function Home () {
     return (
         <div className="flex min-h-screen items-center justify-center font-sans bg-black dark:bg-black">
             <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-32 px-16 bg-black dark:bg-black sm:items-start">
+
+                {/* <div className="fireteam">
+                    <Link href="/portal" className="login-link fireteam-tag">
+                        {displayName ? displayName : 'Login'}
+                    </Link>
+                    { displayName ? '' : 
+                        <Link href="/register" className="login-link fireteam-tag">
+                            REGISTER
+                        </Link>
+                    }
+                </div> */}
+
                 <div className="mb-20 w-full">
                     <GlitchText firstSpan="video" secondSpan="vomit" />
                 </div>

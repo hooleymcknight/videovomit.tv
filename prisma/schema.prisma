@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id       Int     @id @default(autoincrement())
+  username String? @db.VarChar(45)
+  password String? @db.LongText
+  type     String? @db.VarChar(45)
+  fname    String? @db.VarChar(45)
+  lname    String? @db.VarChar(45)
+  email    String? @db.VarChar(45)
+}
+
+model events {
+  id          Int       @id @default(autoincrement())
+  name        String?   @db.LongText
+  description String?   @db.LongText
+  datetime    DateTime? @db.DateTime(0)
+  location    String?   @db.LongText
+  image_url   String?   @db.LongText
+  author      String?   @db.VarChar(45)
+  host        String?   @db.VarChar(45)
+}
+
+model messages {
+  id       Int       @id @default(autoincrement())
+  name     String?   @db.LongText
+  email    String?   @db.LongText
+  message  String?   @db.LongText
+  datetime DateTime? @db.DateTime(0)
+  read     Int?      @db.TinyInt
+  replied  Int?      @db.TinyInt
+}

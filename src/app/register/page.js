@@ -47,7 +47,7 @@ export default function register() {
             {/* <Navbar /> */}
             <div className="register main-container grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20">
                 <main className="register flex flex-col gap-[32px] row-start-2 sm:items-start">
-                    <h1>Register<span class="desktop-only"> for GoGCommunity.com</span></h1>
+                    <h1>Register<span className="desktop-only"></span></h1>
                     <form id="register-form" onSubmit={(e) => {handleRegister(e)}}>
                         <div className="input-group username">
                             <label>Username</label>

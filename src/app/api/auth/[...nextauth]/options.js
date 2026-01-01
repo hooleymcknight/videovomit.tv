@@ -10,7 +10,7 @@ export const options = {
         Credentials({
             name: "Credentials",
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "guildiebot" },
+                username: { label: "Username", type: "text", placeholder: "username" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {

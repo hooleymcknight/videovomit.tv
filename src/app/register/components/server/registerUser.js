@@ -7,6 +7,7 @@ const db = new PrismaClient();
 
 /* register new user */
 async function validateNewUser(data) {
+    console.log(data)
     const duplicateEmail = await db.users.findMany({
         where: {
             email: data.email,
@@ -25,13 +26,13 @@ async function validateNewUser(data) {
     console.log('find first un:')
     console.log(duplicateUN)
 
-    if (duplicateEmail && duplicateUN) {
+    if (duplicateEmail.length && duplicateUN.length) {
         return 'This username and email have already been used. Please try with different user info.';
     }
-    else if (duplicateEmail) {
+    else if (duplicateEmail.length) {
         return 'This email has already been used. Please try another email.';
     }
-    else if (duplicateUN) {
+    else if (duplicateUN.length) {
         return 'This email has already been used. Please try another email.';
     }
 

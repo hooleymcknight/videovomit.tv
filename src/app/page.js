@@ -15,33 +15,10 @@ export default function Home () {
 
     return (
         <div className="flex min-h-screen items-center justify-center font-sans bg-black dark:bg-black">
-
-            <div className="fireteam">
-                <Link href="/portal" className="login-link fireteam-tag">
-                    {/* <Image src="/fireteam/triangle.png" alt="triangle icon" width={40} height={40} /> */}
-                    {displayName ? displayName : 'log in'}
-                </Link>
-                { displayName ? '' : 
-                    <Link href="/register" className="login-link fireteam-tag">
-                        {/* <Image src="/fireteam/plus.png" alt="plus icon" width={40} height={40} /> */}
-                        REGISTER
-                    </Link>
-                }
-            </div>
-
+            <Link href="/portal" className="login-link fireteam-tag">
+                {displayName ? displayName : 'log in'}
+            </Link>
             <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-32 px-16 bg-black dark:bg-black sm:items-start">
-
-                {/* <div className="fireteam">
-                    <Link href="/portal" className="login-link fireteam-tag">
-                        {displayName ? displayName : 'Login'}
-                    </Link>
-                    { displayName ? '' : 
-                        <Link href="/register" className="login-link fireteam-tag">
-                            REGISTER
-                        </Link>
-                    }
-                </div> */}
-
                 <div className="mb-20 w-full">
                     <GlitchText firstSpan="video" secondSpan="vomit" />
                 </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "../SessionProvider";
 
-import '../styles/portal.css';
+// import '../styles/portal.css';
 
 export default function Portal() {
     const session = useSession().sessionData;

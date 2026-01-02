@@ -5,6 +5,7 @@ import { useSession } from "../SessionProvider";
 import { useRouter } from "next/navigation";
 import { registerUser } from "./components/server/registerUser";
 
+import pageRoutes from "@/pageRoutes";
 import '../styles/register.css';
 
 export default function register() {
@@ -12,7 +13,7 @@ export default function register() {
     const router = useRouter();
 
     if (session?.user) {
-        router.push('/portal');
+        router.push(pageRoutes.account);
     }
 
     const handleRegister = async (e) => {
@@ -33,7 +34,7 @@ export default function register() {
             }
             else {
                 window.alert('Success! You will now be redirected to sign in.')
-                router.push('/portal');
+                router.push(pageRoutes.account);
             }
         })
         .catch((e) => {
@@ -49,32 +50,27 @@ export default function register() {
                 <main className="register flex flex-col gap-[32px] row-start-2 sm:items-start">
                     <h1>Register<span className="desktop-only"></span></h1>
                     <form id="register-form" onSubmit={(e) => {handleRegister(e)}}>
-                        <div className="input-group username">
-                            <label>Username</label>
-                            <input id="username" type="text" placeholder="username"></input>
-                        </div>
+                        <label className="input-group username">Username
+                            <input id="username" type="text" placeholder="username" autoComplete="username" ></input>
+                        </label>
 
-                        <div className="input-group email">
-                            <label>Email</label>
-                            <input id="email" type="email" placeholder="email@domain.com"></input>
-                        </div>
+                        <label className="input-group email">Email
+                            <input id="email" type="email" placeholder="email@domain.com" autoComplete="email"></input>
+                        </label>
 
-                        <div className="input-group fname">
-                            <label>First Name</label>
-                            <input id="fname" type="text" placeholder="First Name"></input>
-                        </div>
+                        <label className="input-group fname">First Name
+                            <input id="fname" type="text" placeholder="First Name" autoComplete="given-name"></input>
+                        </label>
 
-                        <div className="input-group lname">
-                            <label>Last Name</label>
-                            <input id="lname" type="text" placeholder="Last Name"></input>
-                        </div>
+                        <label className="input-group lname">Last Name
+                            <input id="lname" type="text" placeholder="Last Name" autoComplete="family-name"></input>
+                        </label>
 
-                        <div className="input-group password">
-                            <label>Password</label>
-                            <input id="password" type="password" placeholder="password"></input>
-                        </div>
+                        <label className="input-group password">Password
+                            <input id="password" type="password" placeholder="password" autoComplete="new-password"></input>
+                        </label>
 
-                        <button id="register">Register</button>
+                        <button id="register" alt="Register for new account">Register</button>
                     </form>
 
                 </main>

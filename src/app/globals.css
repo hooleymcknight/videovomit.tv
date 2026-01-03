@@ -5,9 +5,14 @@
     src: url("../../public/VCR_OSD_MONO_1.001.ttf");
 }
 
+/* cyan: #56fff2 */
+/* magenta: #bd09f3 */
+
 :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --vv-cyan: #56fff2;
+    --vv-magenta: #bd09f3;
 }
 
 @theme inline {
@@ -28,11 +33,32 @@ html, body {
 }
 
 body {
-    background: var(--background);
     color: var(--foreground);
     font-family: VCR, Arial, Helvetica, sans-serif;
 }
 
+body.coming-soon {
+    background: var(--background);
+}
+
 h1 {
     font-size: 36px;
+}
+
+.coming-soon nav {
+    display: none !important;
+}
+
+.login-link {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+html:not(.coming-soon) body {
+    background-image: url('../../public/assets/backgrounds/VHS_Box_Background.webp');
 }

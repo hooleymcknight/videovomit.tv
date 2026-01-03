@@ -1,0 +1,42 @@
+nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../../../public/assets/backgrounds/Website_Header01.webp');
+    background-size: cover;
+    background-position: center center;
+}
+
+nav .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 40px;
+}
+
+nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav .nav-item {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+nav .nav-item a {
+    display: block;
+    padding: 8px 12px;
+}
+
+nav .nav-item:hover {
+    background-color: rgba(0, 0, 0, 1);
+    color: var(--vv-cyan);
+}
+
+/* nav homepage logo */
+nav .nav-inner > a:hover {
+    transform: scale(1.2) rotate(-13deg);
+}

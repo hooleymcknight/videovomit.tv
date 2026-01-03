@@ -2,6 +2,7 @@ import "./globals.css";
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import SessionProvider from "./SessionProvider";
+import Navbar from "./components/navigation/navigation";
 
 export const metadata = {
     title: "videovomit",
@@ -22,6 +23,7 @@ export default async function RootLayout ({ children }) {
             <body
                 className={`antialiased`}
             >
+                <Navbar />
                 <SessionProvider session={session}>
                     {children}
                 </SessionProvider>
@@ -29,5 +31,3 @@ export default async function RootLayout ({ children }) {
         </html>
     );
 }
-
-// module.exports = { RootLayout, metadata }

@@ -18,7 +18,7 @@ model users {
 }
 
 model vvod {
-  id      Int     @id @default(autoincrement())
-  title   String? @unique(map: "title_UNIQUE") @db.VarChar(85)
-  console String? @unique(map: "console_UNIQUE") @db.VarChar(45)
+  id       Int     @id @default(autoincrement())
+  title    String? @unique(map: "title_UNIQUE") @db.VarChar(85)
+  platform String? @db.VarChar(45)
 }

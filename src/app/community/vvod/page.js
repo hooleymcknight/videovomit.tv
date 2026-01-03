@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import pageRoutes from '@/pageRoutes';
 import { useSession } from '../../SessionProvider';
-import { pullGamesData } from "./components/server/vvod";
+import { addGameData, pullGamesData } from "./components/server/vvod";
 import '../../globals.css';
 import './vvod.css';
 import { useEffect, useState } from 'react';
@@ -28,8 +28,6 @@ export default function VVOD () {
     let userType = 'admin'
 
     const loadData = async () => {
-        // let gamesData = await pullGamesData();
-
         let res = await pullGamesData()
         .then((response) => {
             if (response) {
@@ -45,8 +43,39 @@ export default function VVOD () {
         });
     }
 
+    const addGame = (e) => {
+        const container = e.target.closest('.add-game');
+        let title = container.querySelector('input#title').value || '';
+        let platform = container.querySelector('select#platform').value || '';
+
+        if (!title.length || !platform.length) {
+            window.alert('Please check game info and try again.');
+            return;
+        }
+
+        let gameData = {
+            title: title,
+            platform: platform,
+        }
+
+        let res = addGameData(gameData)
+        .then((response) => {
+            if (response) {
+                window.alert(`There was an error adding the game: ${response}`);
+            }
+            else {
+                // everything is cool
+                window.alert('Game added!');
+                loadData();
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return 'There has been an unknown error. Please refresh and try again.'
+        });
+    }
+
     useEffect(() => {
-        // console.log('use effect', typeof(gamesData[0]))
         if (!gamesData.length) {
             loadData();
         }
@@ -74,7 +103,7 @@ export default function VVOD () {
                             </select>
                         </label>
 
-                        <button id="add-vvod">Add</button>
+                        <button id="add-vvod" onClick={(e) => {addGame(e)}}>Add</button>
 
                     </div>
                 :
@@ -85,7 +114,7 @@ export default function VVOD () {
                         {consoles.sort().map(x =>
                             <div key={x} className="platform-section">
                                 <h3>{x}</h3>
-                                {gamesData.filter(y => y.console === x).map(z => z.title).sort().map(data =>
+                                {gamesData.filter(y => y.platform === x).map(z => z.title).sort().map(data =>
                                     <p key={data} style={{ marginLeft: '20px' }}>{data}</p>
                                 )}
                             </div>

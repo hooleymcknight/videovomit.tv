@@ -42,7 +42,7 @@ export default function Home () {
                 </div>
             </main>
 
-            <Image className="moth-spider" src="./assets/moth.gif" alt="moth for spider" width={0} height={0} style={{ width: '100px', height: 'auto' }} />
+            {/* <Image className="moth-spider" src="./assets/moth.gif" alt="moth for spider" width={0} height={0} style={{ width: '100px', height: 'auto' }} /> */}
         </div>
     );
 }

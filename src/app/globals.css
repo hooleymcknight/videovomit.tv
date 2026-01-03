@@ -74,7 +74,8 @@ html:not(.coming-soon) body {
     margin-bottom: 10px;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
     border: 1px solid #dadada;
     border-radius: 4px;
     padding: 2px 4px;

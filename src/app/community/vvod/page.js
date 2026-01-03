@@ -14,8 +14,8 @@ const consoles = [
     'Super Nintendo',
     'Sega Genesis',
     'Turbo Grafix 16',
-    'Gameboy',
-    'Gameboy Advance',
+    'GameBoy',
+    'GameBoy Advance',
     'Nintendo 64',
     'PlayStation',
     'Dreamcast',
@@ -55,7 +55,7 @@ export default function VVOD () {
 
         let gameData = {
             title: title,
-            platform: platform,
+            platform: platform.toLowerCase(),
         }
 
         let res = addGameData(gameData)
@@ -115,7 +115,7 @@ export default function VVOD () {
                             <div key={x} className="platform-section" style={{ marginBottom: '20px' }}>
                                 <h2>{x}</h2>
                                 <ul style={{ listStyleType: 'square', marginLeft: '20px' }}>
-                                    {gamesData.filter(y => y.platform === x).map(z => z.title).sort().map(data =>
+                                    {gamesData.filter(y => y.platform.toLowerCase() === x.toLowerCase()).map(z => z.title).sort().map(data =>
                                         <li key={data} style={{ marginLeft: '20px' }}>{data}</li>
                                     )}
                                 </ul>

@@ -134,6 +134,12 @@ nav .nav-inner > a:hover {
     opacity: 0;
 }
 
+@media (min-width: 768px) {
+    .mobile-nav-toggle {
+        display: none;
+    }
+}
+
 @media (max-width: 767px) {
     nav .nav-links {
         flex-direction: column;

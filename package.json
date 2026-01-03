@@ -9,7 +9,7 @@
     "start": "next start",
     "export": "next export",
     "lint": "eslint",
-    "deploy": "pm2 start npm --name 'videovomit.tv' -- start"
+    "deploy": "pm2 delete all && pm2 start npm --name 'videovomit.tv' -- start"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

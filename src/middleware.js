@@ -5,7 +5,7 @@
 import { NextResponse } from "next/server";
 
 export default function middleware(request) {
-    return NextResponse.next();
+    return NextResponse.next(new URL('/', request.url));
 }
 
 // // applies next-auth only to matching routes - can be regex

@@ -1,6 +1,7 @@
 // import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from 'bcryptjs';
 
 const db = new PrismaClient();
@@ -35,9 +36,7 @@ export const options = {
                     return allAccounts;
                 }
                 else if (allAccounts && !isMatch && credentials?.password === allAccounts?.password) {
-                    console.log('you need to change your password.')
                     allAccounts.needsReset = true;
-                    console.log(allAccounts.needsReset)
                     return allAccounts;
                 }
                 else {
@@ -59,7 +58,11 @@ export const options = {
             }
         })
     ],
-    // secret: process.env.NEXTAUTH_SECRET,
+    adapter: PrismaAdapter(db),
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: 'jwt',
+    },
     callbacks: {
         async jwt({ token, user }) {
             if (user) {

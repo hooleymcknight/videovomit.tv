@@ -18,7 +18,7 @@ export default function Home () {
     return (
         <div className="flex min-h-screen items-center justify-center font-sans bg-black dark:bg-black">
             <div className="login-link">
-                <Link href={pageRoutes.account}>
+                <Link href={session?.sessionData ? pageRoutes.account : pageRoutes.signin}>
                     {displayName ? displayName : ''}
                     <Image src="./assets/brainscan.png" alt="brain scan" width={40} height={40} />
                 </Link>

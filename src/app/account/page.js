@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "../SessionProvider";
+import pageRoutes from "@/pageRoutes";
 
 // import '../styles/account.css';
 
@@ -14,12 +15,12 @@ export default function Account() {
             <Link href="/" className="homepage-logo">
                 {/* <Image src="/GoG-logo.svg" alt="GoG Community logo" width={180} height={38} /> */} homepage
             </Link>
-            <a className="sign-out" href="/api/auth/signout?callbackUrl=%2F">Sign out</a>
+            <a className="sign-out" href={pageRoutes.signout}>Sign out</a>
             <main className="account flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-                <h1>vvTV {session.user.type === 'admin' ? 'Admin' : 'User'} Account Page</h1>
+                <h1>vvTV {session?.user?.type === 'admin' ? 'Admin' : 'User'} Account Page</h1>
                 <div className="">
                     {/* <Image src="/fireteam/triangle.png" alt="triangle icon" width={40} height={40} /> */}
-                    {session.user.username}
+                    {session?.user?.username}
                 </div>
 
                 <div className="account-sidebar">

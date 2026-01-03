@@ -1,6 +1,5 @@
 generator client {
-    provider = "prisma-client-js"
-    // output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -16,4 +15,10 @@ model users {
   fname    String? @db.VarChar(45)
   lname    String? @db.VarChar(45)
   email    String? @db.VarChar(45)
+}
+
+model vvod {
+  id      Int     @id @default(autoincrement())
+  title   String? @unique(map: "title_UNIQUE") @db.VarChar(85)
+  console String? @unique(map: "console_UNIQUE") @db.VarChar(45)
 }

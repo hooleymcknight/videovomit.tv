@@ -1,4 +1,4 @@
-button#register {
+button#add-vvod {
     background: #888;
     border: 1px solid #888;
     color: #000;
@@ -8,7 +8,7 @@ button#register {
     cursor: pointer;
 }
 
-button#register:hover {
+button#add-vvod:hover {
     background-color: #000;
     color: #fff;
 }

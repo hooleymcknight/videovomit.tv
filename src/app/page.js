@@ -41,6 +41,8 @@ export default function Home () {
                     <Typewriter text="coming soon..." />
                 </div>
             </main>
+
+            <Image className="moth-spider" src="./assets/moth.gif" alt="moth for spider" width={0} height={0} style={{ width: '100px', height: 'auto' }} />
         </div>
     );
 }

@@ -9,10 +9,10 @@ import './navigation.css';
 // dropdown object format --> { pageroute: text }
 
 export const navLinks = {
-    'homepage': {
+    /* 'homepage': {
         'text': 'homepage',
         'image': '',
-    },
+    }, */
     'content': {
         'text': 'content',
         'image': '',
@@ -70,6 +70,33 @@ const Navbar = () => {
         e.target.closest('.nav-item').classList.add('active');
     }
 
+    const mobileMenuToggleHandler = (e) => {
+        e.preventDefault();
+        let toggle = e.target.closest('.mobile-nav-toggle');
+        if ( toggle.classList.contains('active-menu') ) {
+            toggle.classList.remove( 'active-menu' );
+        } else {
+            toggle.classList.add( 'active-menu' );
+        }
+    }
+
+    const mobileNavItemClickHandler = (e) => {
+        e.preventDefault();
+        const navItem = e.target.closest('.nav-item');
+        console.log(navItem)
+        console.log(!navItem.classList.contains('mobile-active'))
+        if (!navItem.classList.contains('mobile-active')) {
+            const thisText = navItem.dataset.text;
+        
+            const prevActive = document.querySelectorAll(`.nav-item.mobile-active:not([data-text="${thisText}"])`);
+            if (prevActive.length) {
+                prevActive.forEach((prev) => { prev.classList.remove('mobile-active') });
+            }
+
+            navItem.classList.add('mobile-active');
+        }
+    }
+
     return(
         <nav>
             <div className="nav-inner">
@@ -77,29 +104,35 @@ const Navbar = () => {
                     <Image src="../../../assets/homepage_button.webp" alt="videovomit logo" width={0} height={0} style={{ width: '120px', height: 'auto', }} />
                 </Link>
 
-                <div ref={intentRef} onMouseOut={mouseOutHandler}
-                    className={`${isHovering ? "nav-links hover" : "nav-links"}`}
-                >
-                    {Object.keys(navLinks).map(x => 
-                        <div
-                            key={x} className="nav-item"
-                            // className={`${isHovering ? "nav-item hover" : "nav-item"}`}
-                            onMouseOver={(e) => {mouseOverHandler(e)}} // onMouseOut={mouseOutHandler}
-                        >
-                            <Link href={pageRoutes[`${x}`]} alt={navLinks[`${x}`].text}>
-                                {navLinks[`${x}`].text}
-                            </Link>
-                            {navLinks[`${x}`].dropdown ? 
-                                <div className="dropdown" data-menu={navLinks[`${x}`].text}>
-                                    {Object.keys(navLinks[`${x}`].dropdown).map(y => 
-                                        <Link key={y} href={pageRoutes[`${y}`]} alt={navLinks[`${x}`].dropdown[`${y}`]}>
-                                            {navLinks[`${x}`].dropdown[`${y}`]}
-                                        </Link>
-                                    )}
-                                </div>
-                            : ''}
-                        </div>
-                    )}
+                <div className="nav-links-container">
+                    <div className="mobile-nav-toggle" onClick={(e) => {mobileMenuToggleHandler(e)}}>
+                        <a className="main-nav-toggle" href="#main-nav"><i>Menu</i></a>
+                    </div>
+                    <div ref={intentRef} onMouseOut={mouseOutHandler}
+                        className={`${isHovering ? "nav-links hover" : "nav-links"}`}
+                    >
+                        {Object.keys(navLinks).map(x => 
+                            <div
+                                key={x} className="nav-item"
+                                data-text={navLinks[`${x}`].text}
+                                onMouseOver={(e) => {mouseOverHandler(e)}}
+                                // onClick={(e) => {mobileNavItemClickHandler(e)}}
+                            >
+                                <Link href={pageRoutes[`${x}`]} alt={navLinks[`${x}`].text}>
+                                    {navLinks[`${x}`].text}
+                                </Link>
+                                {navLinks[`${x}`].dropdown ?
+                                    <div className="dropdown" data-menu={navLinks[`${x}`].text}>
+                                        {Object.keys(navLinks[`${x}`].dropdown).map(y => 
+                                            <Link key={y} href={pageRoutes[`${y}`]} alt={navLinks[`${x}`].dropdown[`${y}`]}>
+                                                {navLinks[`${x}`].dropdown[`${y}`]}
+                                            </Link>
+                                        )}
+                                    </div>
+                                : ''}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </nav>

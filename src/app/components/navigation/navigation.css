@@ -16,6 +16,7 @@ nav .nav-inner {
     padding: 20px 40px;
 }
 
+nav .nav-links-container,
 nav .nav-links {
     display: flex;
     align-items: center;
@@ -47,17 +48,123 @@ nav .nav-inner > a:hover {
 }
 
 /* dropdowns, if they are nice to me */
-.nav-item .dropdown {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.8);
-    width: 200%;
-    min-width: 200px;
+@media (min-width: 768px) {
+    .nav-item .dropdown {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        width: 200%;
+        min-width: 200px;
+    }
+
+    .hover .nav-item.active .dropdown {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
-.hover .nav-item.active .dropdown {
-    opacity: 1;
-    visibility: visible;
+/* mobile */
+
+.mobile-nav-toggle {
+    display: inline-block;
+    height: 36px;
+    margin-right: 27px;
+}
+
+.mobile-nav-toggle a.main-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    /* left: 70px; */
+    position: absolute;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* top: 25px; */
+}
+
+.mobile-nav-toggle a.main-nav-toggle:after,
+.mobile-nav-toggle a.main-nav-toggle:before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    height: 0;
+    border-bottom: 3px solid #bbb;
+    width: calc(100% - 16px);
+    left: 8px;
+    right: 8px;
+    transition: all ease-out 0.3s;
+}
+
+.mobile-nav-toggle a.main-nav-toggle:after {
+    top: calc(100% - 12px);
+}
+
+.mobile-nav-toggle a.main-nav-toggle i {
+    display: block;
+    text-indent: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 2px;
+    background-color: #bbb;
+    width: calc(100% - 16px);
+    /* left: 8px; */
+    /* right: 8px; */
+    position: absolute;
+    top: calc(50% - 2px);
+    transition: all ease-out 0.1s;
+}
+
+.mobile-nav-toggle.active-menu a.main-nav-toggle:after {
+    transform: rotate(-45deg);
+    transform-origin: center;
+    top: 50%;
+}
+
+.mobile-nav-toggle.active-menu a.main-nav-toggle:before {
+    transform: rotate(45deg);
+    transform-origin: center;
+    top: 50%
+}
+
+.mobile-nav-toggle.active-menu a.main-nav-toggle i {
+    opacity: 0;
+}
+
+@media (max-width: 767px) {
+    nav .nav-links {
+        flex-direction: column;
+        position: absolute;
+        top: 116px;
+        background: rgba(0, 0, 0, 0.8);
+        left: 100%;
+        width: 100%;
+        transition: all 0.2s ease;
+    }
+
+    nav .mobile-nav-toggle.active-menu + .nav-links {
+        left: 0;
+    }
+
+    .nav-item {
+        min-width: 200px;
+        text-align: center;
+    }
+
+    .nav-item .dropdown {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+        max-height: 0;
+    }
+
+    .nav-item.mobile-active .dropdown,
+    .hover .nav-item.active .dropdown {
+        opacity: 1;
+        visibility: visible;
+        max-height: 1000px;
+    }
 }

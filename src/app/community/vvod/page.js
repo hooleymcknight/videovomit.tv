@@ -1,12 +1,14 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
 import pageRoutes from '@/pageRoutes';
 import { useSession } from '../../SessionProvider';
 import { addGameData, pullGamesData } from "./components/server/vvod";
 import '../../globals.css';
 import './vvod.css';
-import { useEffect, useState } from 'react';
+
 
 const consoles = [
     'Atari',
@@ -25,7 +27,6 @@ export default function VVOD () {
     const [gamesData, setGamesData] = useState([]);
     const session = useSession();
     const userType = session?.sessionData?.user?.type;
-    // let userType = 'admin'
 
     const loadData = async () => {
         let res = await pullGamesData()
@@ -87,7 +88,7 @@ export default function VVOD () {
                 <h1 style={{ marginBottom: '20px' }}>VVOD Games Played So Far</h1>
 
                 {userType === 'admin' ?
-                    <div className="add-game" style={{ marginBottom: '80px' }}>
+                    <div className="add-game">
                         <h2>Add Game:</h2>
 
                         <label htmlFor="title" className="input-group">Game title
@@ -112,11 +113,15 @@ export default function VVOD () {
                 {gamesData.length ?
                     <div className="games-data">
                         {consoles.sort().map(x =>
-                            <div key={x} className="platform-section" style={{ marginBottom: '20px' }}>
-                                <h2>{x}</h2>
-                                <ul style={{ listStyleType: 'square', marginLeft: '20px' }}>
+                            <div key={x} className="platform-section">
+                                <div className="console-heading">
+                                    <Image src={`../assets/platform-icons/${x.toLowerCase().replace(/\s+/g, '')}.png`} alt={x} width={36} height={36} />
+                                    <h2>{x}</h2>
+                                </div>
+
+                                <ul>
                                     {gamesData.filter(y => y.platform.toLowerCase() === x.toLowerCase()).map(z => z.title).sort().map(data =>
-                                        <li key={data} style={{ marginLeft: '20px' }}>{data}</li>
+                                        <li key={data}>{data}</li>
                                     )}
                                 </ul>
                             </div>

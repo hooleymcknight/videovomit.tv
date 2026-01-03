@@ -1,3 +1,7 @@
+.add-game {
+    margin-bottom: 60px;
+}
+
 button#add-vvod {
     background: #888;
     border: 1px solid #888;
@@ -11,4 +15,22 @@ button#add-vvod {
 button#add-vvod:hover {
     background-color: #000;
     color: #fff;
+}
+
+.console-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.platform-section ul {
+    list-style-type: square;
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+.platform-section ul li {
+    margin-left: 20px;
 }

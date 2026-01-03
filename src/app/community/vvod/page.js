@@ -24,8 +24,8 @@ const consoles = [
 export default function VVOD () {
     const [gamesData, setGamesData] = useState([]);
     const session = useSession();
-    // const userType = session?.sessionData?.user?.type;
-    let userType = 'admin'
+    const userType = session?.sessionData?.user?.type;
+    // let userType = 'admin'
 
     const loadData = async () => {
         let res = await pullGamesData()
@@ -84,7 +84,7 @@ export default function VVOD () {
     return (
         <div className="flex min-h-screen items-center justify-center">
             <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-32 px-16 sm:items-start">
-                <h1>VVOD Games Played So Far</h1>
+                <h1 style={{ marginBottom: '20px' }}>VVOD Games Played So Far</h1>
 
                 {userType === 'admin' ?
                     <div className="add-game" style={{ marginBottom: '80px' }}>
@@ -112,11 +112,13 @@ export default function VVOD () {
                 {gamesData.length ?
                     <div className="games-data">
                         {consoles.sort().map(x =>
-                            <div key={x} className="platform-section">
-                                <h3>{x}</h3>
-                                {gamesData.filter(y => y.platform === x).map(z => z.title).sort().map(data =>
-                                    <p key={data} style={{ marginLeft: '20px' }}>{data}</p>
-                                )}
+                            <div key={x} className="platform-section" style={{ marginBottom: '20px' }}>
+                                <h2>{x}</h2>
+                                <ul style={{ listStyleType: 'square', marginLeft: '20px' }}>
+                                    {gamesData.filter(y => y.platform === x).map(z => z.title).sort().map(data =>
+                                        <li key={data} style={{ marginLeft: '20px' }}>{data}</li>
+                                    )}
+                                </ul>
                             </div>
                         )}
                     </div>

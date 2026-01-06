@@ -17,9 +17,9 @@ nav .nav-inner {
     padding: 20px 40px;
 }
 
-nav .nav-links-container {
+/* nav .nav-links-container {
     position: relative;
-}
+} */
 
 nav .nav-links-container,
 nav .nav-links {
@@ -151,13 +151,13 @@ nav .nav-inner > a:hover {
         position: absolute;
         top: 116px;
         background: rgba(0, 0, 0, 0.8);
-        left: 100%;
-        width: 100%;
+        left: 100vw;
+        width: 100vw;
         transition: all 0.2s ease;
     }
 
     nav .mobile-nav-toggle.active-menu + .nav-links {
-        left: 0;
+        left: 0vw;
     }
 
     .nav-item {

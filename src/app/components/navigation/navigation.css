@@ -16,6 +16,10 @@ nav .nav-inner {
     padding: 20px 40px;
 }
 
+nav .nav-links-container {
+    position: relative;
+}
+
 nav .nav-links-container,
 nav .nav-links {
     display: flex;

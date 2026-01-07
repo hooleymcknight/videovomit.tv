@@ -1,4 +1,9 @@
+.twitch-embed-container,
 #twitch-embed,
 #twitch-embed iframe {
     width: 100%;
+}
+
+.twitch-embed-container[data-active="false"] {
+    display: none;
 }

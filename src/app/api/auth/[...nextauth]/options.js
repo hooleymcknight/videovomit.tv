@@ -1,5 +1,6 @@
 // import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import TwitchProvider from "next-auth/providers/twitch";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from 'bcryptjs';
@@ -56,7 +57,11 @@ export const options = {
                 //     return null;
                 // }
             }
-        })
+        }),
+        TwitchProvider({
+            clientId: process.env.TWITCH_CLIENT_ID,
+            clientSecret: process.env.TWITCH_CLIENT_SECRET,
+        }),
     ],
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,

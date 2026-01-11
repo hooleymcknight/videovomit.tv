@@ -66,7 +66,8 @@ h1 {
 
 html:not(.coming-soon) body {
     background-image: url('../../public/assets/backgrounds/VHS_Box_Background.webp');
-    background-size: contain;
+    background-size: 100vw;
+    background-repeat: repeat-y;
 }
 
 /* inputs */

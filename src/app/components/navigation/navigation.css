@@ -139,8 +139,13 @@ nav .nav-inner > a:hover {
     opacity: 0;
 }
 
+nav .nav-item a.account > span {
+    margin-left: 10px;
+}
+
 @media (min-width: 768px) {
-    .mobile-nav-toggle {
+    .mobile-nav-toggle,
+    nav .nav-item a.account > span {
         display: none;
     }
 }

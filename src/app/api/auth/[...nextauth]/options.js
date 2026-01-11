@@ -24,9 +24,6 @@ export const options = {
                                     { username: credentials?.username, },
                                     { email: credentials?.username, },
                                 ]
-                            },
-                            {
-                                type: 'admin'
                             }
                         ]
                     }
@@ -43,19 +40,6 @@ export const options = {
                 else {
                     return null;
                 }
-
-                // retrieve user data to verify
-                // Docs: https://next-auth.js.org/configuration/providers/credentials
-                // const user = { id: "812", name: "hooleymcknight", password: "nothankyou" }
-                // // the above is hard-coded, please dear god replace this after you read the above docs.
-                // console.log(user);
-
-                // if (credentials?.username === user.name && credentials?.password === user.password) {
-                //     return user;
-                // }
-                // else {
-                //     return null;
-                // }
             }
         }),
         TwitchProvider({

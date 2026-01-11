@@ -81,7 +81,8 @@ html:not(.coming-soon) body {
 }
 
 .input-group input,
-.input-group select {
+.input-group select,
+.input-group textarea {
     border: 1px solid #dadada;
     border-radius: 4px;
     padding: 2px 4px;

@@ -1,0 +1,18 @@
+main,
+#contact-form {
+    width: 100%;
+    max-width: 800px;
+}
+
+#contact-form .input-group label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 60px;
+}
+
+#contact-form .input-group input,
+#contact-form .input-group select,
+#contact-form .input-group textarea {
+    width: 70%;
+}

@@ -1,0 +1,34 @@
+.acct-info-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.acct-info-section h3 {
+    font-size: 20px;
+}
+
+.account-sidebar {
+    margin-bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.account-sidebar button {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px 12px;
+}
+
+@media (min-width: 1025px) {
+    .account-page-content {
+        display: flex;
+        justify-content: space-between;
+    }
+    .account-sidebar {
+        width: 20%;
+        flex-direction: column;
+    }
+    .acct-info-group {
+        width: 70%;
+    }
+}

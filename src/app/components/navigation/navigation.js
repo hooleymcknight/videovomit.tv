@@ -2,9 +2,12 @@
 import { useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from '@/app/SessionProvider';
 import { useHoverIntent } from 'react-use-hoverintent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pageRoutes from "@/pageRoutes";
 import './navigation.css';
+import { faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
 
 // dropdown object format --> { pageroute: text }
 
@@ -50,6 +53,9 @@ export const navLinks = {
 }
 
 const Navbar = () => {
+    const session = useSession().sessionData;
+    const displayName = session?.user?.username;
+
     const [isHovering, intentRef, setIsHovering] = useHoverIntent({
         timeout: 100,
         sensitivity: 10,
@@ -83,8 +89,6 @@ const Navbar = () => {
     const mobileNavItemClickHandler = (e) => {
         e.preventDefault();
         const navItem = e.target.closest('.nav-item');
-        console.log(navItem)
-        console.log(!navItem.classList.contains('mobile-active'))
         if (!navItem.classList.contains('mobile-active')) {
             const thisText = navItem.dataset.text;
         
@@ -132,6 +136,14 @@ const Navbar = () => {
                                 : ''}
                             </div>
                         )}
+                        <div className="nav-item">
+                            <Link className="account" href={displayName ? pageRoutes.account : pageRoutes.signin} alt={displayName ? 'account page' : 'sign in'}>
+                                <FontAwesomeIcon icon={faUser} />
+                                <span className="mobile-text">
+                                    {displayName ? displayName : 'log in'}
+                                </span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

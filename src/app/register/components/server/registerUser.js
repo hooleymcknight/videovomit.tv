@@ -20,11 +20,6 @@ async function validateNewUser(data) {
             username: data.username,
         }
     });
-    console.log('find first email:')
-    console.log(duplicateEmail)
-
-    console.log('find first un:')
-    console.log(duplicateUN)
 
     if (duplicateEmail.length && duplicateUN.length) {
         return 'This username and email have already been used. Please try with different user info.';

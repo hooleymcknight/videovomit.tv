@@ -1,20 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-// import Navbar from "../components/navbar";
 import { useSession } from "../SessionProvider";
 import { useRouter } from "next/navigation";
 import { registerUser } from "./components/server/registerUser";
 
 import pageRoutes from "@/pageRoutes";
 import '../styles/register.css';
+import { useEffect } from "react";
 
 export default function register() {
     const session = useSession().sessionData;
     const router = useRouter();
-
-    if (session?.user) {
-        router.push(pageRoutes.account);
-    }
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -43,9 +39,14 @@ export default function register() {
         });
     }
 
+    useEffect(() => {
+        if (session?.user) {
+            router.push(pageRoutes.account);
+        }
+    }, []);
+
     return (
         <>
-            {/* <Navbar /> */}
             <div className="register main-container grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20">
                 <main className="register flex flex-col gap-[32px] row-start-2 sm:items-start">
                     <h1>Register<span className="desktop-only"></span></h1>

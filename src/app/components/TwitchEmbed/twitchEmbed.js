@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
+import { useSession } from "@/app/SessionProvider";
 
 export default function TwitchEmbed (props) {
     const [isLive, setIsLive] = useState(false);
@@ -22,7 +23,7 @@ export default function TwitchEmbed (props) {
     }
 
     useEffect(() => {
-        if (!document.querySelectorAll('#twitch-embed *').length) {
+        if (!document.querySelectorAll('#twitch-embed *').length && props.live) {
             embedTwitch();
         }
     }, []);

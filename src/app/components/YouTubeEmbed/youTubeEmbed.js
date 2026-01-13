@@ -18,9 +18,8 @@ export default function YouTubeEmbed (props) {
         const listElement = document.getElementById('playlist-items');
         if (items && items.length > 0) {
             items.forEach(item => {
-                console.log(item);
                 const title = item.snippet.title;
-                const videoId = item.id.videoId;
+                const videoId = item.id.videoId || item.id || item.snippet.resourceId.videoId;
                 const li = document.createElement('li');
                 // Create a link to the video
                 const a = document.createElement('a');
@@ -28,7 +27,6 @@ export default function YouTubeEmbed (props) {
                 a.textContent = title;
                 a.target = '_blank'; // Open in new tab
                 li.innerHTML = embedVideo(videoId, title);
-                // li.appendChild(a);
                 listElement.appendChild(li);
             });
         } else {

@@ -19,23 +19,23 @@ export const navLinks = {
     'content': {
         'text': 'content',
         'image': '',
-        'dropdown': {
+        // 'dropdown': {
             // 'playlist': 'playlist',
-            'archive': ' archive',
-            'podcast': 'podcast',
-        }
+            // 'archive': ' archive',
+            // 'podcast': 'podcast',
+        // }
     },
     'shop': {
         'text': 'shop',
         'image': '',
-        'dropdown': {
-            'browseAll': 'browse all',
-            'shirts': 'shirts',
-            'headware': 'headware',
-            'sweatshirts': 'sweatshirts + hoodies',
-            'drinkware': 'drinkware',
-            'misc': 'misc',
-        }
+        // 'dropdown': {
+        //     'browseAll': 'browse all',
+        //     'shirts': 'shirts',
+        //     'headware': 'headware',
+        //     'sweatshirts': 'sweatshirts + hoodies',
+        //     'drinkware': 'drinkware',
+        //     'misc': 'misc',
+        // }
     },
     'community': {
         'text': 'community',

@@ -5,6 +5,11 @@
     src: url("../../public/VCR_OSD_MONO_1.001.ttf");
 }
 
+@font-face {
+    font-family: 'MSW';
+    src: url('../../public/MSW98UI-Bold.ttf');
+}
+
 /* cyan: #56fff2 */
 /* magenta: #bd09f3 */
 
@@ -44,6 +49,10 @@ body {
 
 body.coming-soon {
     background: var(--background);
+}
+
+h1, h2 {
+    font-family: 'MSW';
 }
 
 h1 {

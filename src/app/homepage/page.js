@@ -8,21 +8,15 @@ import YouTubeEmbed from '../components/YouTubeEmbed/youTubeEmbed';
 import '../globals.css';
 import './homepage.css';
 
+import { useSession } from "../SessionProvider";
+
 let isLive = false;
 let ytUploads;
-let trueUploads = [];
 
 /**
  * when you need client components in here, make those the child elements. import them into here.
  * the parent must be server.
  */
-
-const getYT = async () => {
-    let items = await getPlaylistItems();
-    items.forEach((item) => {
-        trueUploads.push(item);
-    });
-}
 
 export default async function Home () {
 
@@ -31,9 +25,13 @@ export default async function Home () {
         isLive = liveStreams[0].type;
     }
 
-    let items = await getPlaylistItems();
-    ytUploads = items;
-    console.log(items)
+    ytUploads = await getPlaylistItems('');
+    
+    console.log('TRUE UPLOADS')
+    // console.log(ytUploads?.map(x => x.snippet.publishedAt));
+    ytUploads?.sort((a, b) => b.snippet.publishedAt - a.snippet.publishedAt);
+    // console.log(ytUploads?.map(x => x.snippet.publishedAt));
+    
 
     return (
         <div className="flex min-h-screen items-center justify-center w-full">

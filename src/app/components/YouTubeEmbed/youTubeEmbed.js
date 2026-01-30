@@ -19,7 +19,7 @@ export default function YouTubeEmbed (props) {
         if (items && items.length > 0) {
             items.forEach(item => {
                 const title = item.snippet.title;
-                const videoId = item.id.videoId || item.id || item.snippet.resourceId.videoId;
+                const videoId = item.snippet.resourceId.videoId;
                 const li = document.createElement('li');
                 // Create a link to the video
                 const a = document.createElement('a');

@@ -25,19 +25,13 @@ export default async function Home () {
         isLive = liveStreams[0].type;
     }
 
-    ytUploads = await getPlaylistItems('');
-    
-    console.log('TRUE UPLOADS')
-    // console.log(ytUploads?.map(x => x.snippet.publishedAt));
-    ytUploads?.sort((a, b) => b.snippet.publishedAt - a.snippet.publishedAt);
-    // console.log(ytUploads?.map(x => x.snippet.publishedAt));
-    
+    ytUploads = await getPlaylistItems();
 
     return (
         <div className="flex min-h-screen items-center justify-center w-full">
             <main className="flex min-h-screen w-full max-w-[1200px] flex-col items-center justify-start py-32 px-16 sm:items-start">
                 <TwitchEmbed live={isLive} />
-                <YouTubeEmbed items={ytUploads} />
+                <YouTubeEmbed items={ytUploads.data} />
             </main>
         </div>
     );

@@ -44,7 +44,7 @@ html, body {
 
 body {
     color: var(--foreground);
-    font-family: VCR, Arial, Helvetica, sans-serif;
+    font-family: MSW, VCR, Arial, Helvetica, sans-serif;
 }
 
 body.coming-soon {

@@ -14,16 +14,16 @@ const pageRoutes = {
     'content': '/content',
     'playlist': '/content/playlist',
     'archive': '/content/archive',
-    'podcast': '/content/podcast',
+    'podcasts': '/content/podcasts',
 
-    /* shop */
-    'shop': '/shop',
-    'browseAll': '/shop/all',
-    'shirts': '/shop/shirts',
-    'headware': '/shop/headware',
-    'sweatshirts': '/shop/sweatshirts-and-hoodies',
-    'drinkware': '/shop/drinkware',
-    'misc': '/shop/misc',
+    /* merch */
+    'merch': '/merch',
+    'browseAll': '/merch/all',
+    'shirts': '/merch/shirts',
+    'headware': '/merch/headware',
+    'sweatshirts': '/merch/sweatshirts-and-hoodies',
+    'drinkware': '/merch/drinkware',
+    'misc': '/merch/misc',
 
     /* community */
     'community': '/community',

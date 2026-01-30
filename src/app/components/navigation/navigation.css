@@ -32,6 +32,9 @@ nav .nav-item {
     background-color: rgba(0, 0, 0, 0.8);
     position: relative;
 }
+nav .nav-item[data-image="true"] {
+    background-color: transparent;
+}
 
 nav .nav-item a {
     display: block;
@@ -40,6 +43,19 @@ nav .nav-item a {
 
 nav .nav-item:hover {
     background-color: rgba(0, 0, 0, 1);
+}
+nav .nav-item[data-image="true"]:hover:nth-child(2n + 1) {
+    background-color: transparent;
+}
+nav .nav-item[data-image="true"]:hover:nth-child(2n) {
+    background-color: transparent;
+}
+
+nav .nav-item[data-image="true"]:hover:nth-child(2n + 1) .top-link > img {
+    transform: scale(1.2) rotate(-13deg);
+}
+nav .nav-item[data-image="true"]:hover:nth-child(2n) .top-link > img {
+    transform: scale(1.2) rotate(13deg);
 }
 
 nav .nav-item > a:hover,
@@ -60,8 +76,17 @@ nav .nav-inner > a:hover {
         transition: all 0.2s ease;
         position: absolute;
         background: rgba(0, 0, 0, 0.8);
-        width: 200%;
-        min-width: 200px;
+        /* width: 200%; */
+        width: fit-content;
+        width: -moz-fit-content;
+        min-width: 600px;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-item .dropdown[data-menu="community"] {
+        right: 0;
     }
 
     .hover .nav-item.active .dropdown {

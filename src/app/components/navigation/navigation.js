@@ -11,6 +11,8 @@ import { faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
 
 // dropdown object format --> { pageroute: text }
 
+const navPath = '../../../assets/nav';
+
 export const navLinks = {
     /* 'homepage': {
         'text': 'homepage',
@@ -18,32 +20,68 @@ export const navLinks = {
     }, */
     'content': {
         'text': 'content',
-        'image': '',
-        // 'dropdown': {
-            // 'playlist': 'playlist',
-            // 'archive': ' archive',
-            // 'podcast': 'podcast',
-        // }
+        'image': 'nav_content.webp',
+        'dropdown': {
+            'playlist': {
+                'text': 'playlist',
+                'image': '',
+            },
+            'archive': {
+                'text': 'archive',
+                'image': 'nav_vod_archives.webp',
+            },
+            'podcasts': {
+                'text': 'podcasts',
+                'image': 'nav_podcasts.webp',
+            },
+        }
     },
-    'shop': {
-        'text': 'shop',
-        'image': '',
+    'merch': {
+        'text': 'merch',
+        'image': 'nav_merch.webp',
         // 'dropdown': {
-        //     'browseAll': 'browse all',
-        //     'shirts': 'shirts',
-        //     'headware': 'headware',
-        //     'sweatshirts': 'sweatshirts + hoodies',
-        //     'drinkware': 'drinkware',
-        //     'misc': 'misc',
+        //     'browseAll': {
+        //         'text': 'browse all',
+        //         'image': '',
+        //     },
+        //     'shirts': {
+        //         'text': 'shirts',
+        //         'image': '',
+        //     },
+        //     'headware': {
+        //         'text': 'headware',
+        //         'image': '',
+        //     },
+        //     'sweatshirts': {
+        //         'text': 'sweatshirts + hoodies',
+        //         'image': '',
+        //     },
+        //     'drinkware': {
+        //         'text': 'drinkware',
+        //         'image': '',
+        //     },
+        //     'misc': {
+        //         'text': 'misc',
+        //         'image': '',
+        //     },
         // }
     },
     'community': {
         'text': 'community',
         'image': '',
         'dropdown': {
-            'battleArcade': 'battle arcade',
-            'vvod': 'videovomit on demand',
-            'guessTheKiller': 'guess the killer',
+            'battleArcade': {
+                'text': 'battle arcade',
+                'image': 'nav_battlearcade.webp',
+            },
+            'vvod': {
+                'text': 'videovomit on demand',
+                'image': '',
+            },
+            'guessTheKiller': {
+                'text': 'guess the killer',
+                'image': '',
+            },
         }
     },
     'contact': {
@@ -105,7 +143,7 @@ const Navbar = () => {
         <nav>
             <div className="nav-inner">
                 <Link href={pageRoutes.homepage} alt="homepage">
-                    <Image src="../../../assets/homepage_button.webp" alt="videovomit logo" width={0} height={0} style={{ width: '120px', height: 'auto', }} />
+                    <Image src={`${navPath}/nav_home.webp`} alt="videovomit logo" width={0} height={0} style={{ width: 'auto', height: '80px', }} />
                 </Link>
 
                 <div className="nav-links-container">
@@ -119,17 +157,29 @@ const Navbar = () => {
                             <div
                                 key={x} className="nav-item"
                                 data-text={navLinks[`${x}`].text}
+                                data-image={!!navLinks[`${x}`].image.length}
                                 onMouseOver={(e) => {mouseOverHandler(e)}}
                                 // onClick={(e) => {mobileNavItemClickHandler(e)}}
                             >
-                                <Link href={pageRoutes[`${x}`]} alt={navLinks[`${x}`].text}>
-                                    {navLinks[`${x}`].text}
+                                <Link className="top-link" href={pageRoutes[`${x}`]} alt={navLinks[`${x}`].text}>
+                                    {navLinks[`${x}`].image.length ?
+                                        
+                                        <Image src={`${navPath}/${navLinks[`${x}`].image}`} alt={navLinks[`${x}`].text} width={0} height={0} style={{ width: 'auto', height: '80px', }} />
+                                    :
+                                        navLinks[`${x}`].text
+                                    }
                                 </Link>
                                 {navLinks[`${x}`].dropdown ?
                                     <div className="dropdown" data-menu={navLinks[`${x}`].text}>
                                         {Object.keys(navLinks[`${x}`].dropdown).map(y => 
-                                            <Link key={y} href={pageRoutes[`${y}`]} alt={navLinks[`${x}`].dropdown[`${y}`]}>
-                                                {navLinks[`${x}`].dropdown[`${y}`]}
+                                            <Link key={y} href={pageRoutes[`${y}`]} alt={navLinks[`${x}`].dropdown[`${y}`].text}>
+                                                {/* {navLinks[`${x}`].dropdown[`${y}`].text} */}
+                                                {navLinks[`${x}`].dropdown[`${y}`].image.length ?
+                                                    
+                                                    <Image src={`${navPath}/${navLinks[`${x}`].dropdown[`${y}`].image}`} alt={navLinks[`${x}`].dropdown[`${y}`].text} width={0} height={0} style={{ width: 'auto', height: '80px', }} />
+                                                :
+                                                    navLinks[`${x}`].dropdown[`${y}`].text
+                                                }
                                             </Link>
                                         )}
                                     </div>

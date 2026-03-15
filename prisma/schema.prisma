@@ -19,6 +19,12 @@ model users {
 
 model vvod {
   id       Int     @id @default(autoincrement())
-  title    String? @unique(map: "title_UNIQUE") @db.VarChar(85)
+  title    String? @db.VarChar(85)
   platform String? @db.VarChar(45)
+}
+
+model admin {
+  id    Int     @unique(map: "id_UNIQUE") @default(autoincrement())
+  field String  @id @unique(map: "field_UNIQUE") @db.VarChar(45)
+  value String? @db.LongText
 }

@@ -14,7 +14,9 @@ export default async function getPlaylistItems() {
     try {
         const response = await fetch(`${UPLOADS_URL}`);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            // throw new Error(`HTTP error! status: ${response.status}`);
+            console.log('yt error')
+            return false;
         }
         
         const data = await response.json();

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
+import { headers } from "next/headers";
 import SessionProvider from "./SessionProvider";
 import Navbar from "./components/navigation/navigation";
 
@@ -9,8 +10,12 @@ export const metadata = {
     description: "this is a video hole",
 };
 
-export default async function RootLayout ({ children }) {
+export default async function RootLayout ({ children, params }) {
     const session = await getServerSession(options);
+    const headerStore = await headers();
+    const searchParams = Object.fromEntries(
+        new URLSearchParams(headerStore.get('searchParams') || '')
+    );
 
     return (
         <html lang="en">

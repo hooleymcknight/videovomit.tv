@@ -95,7 +95,7 @@ const getAccessTokenFromRefresh = async (oauthCode) => {
     console.log('response without refresh token', response)
 
     if (!response.ok) {
-        console.log(oauthCode)
+        console.log('oauth', oauthCode)
         if (oauthCode?.length) {
             const oac = await db.admin.upsert({
                 where: { field: 'twitchOauthCode' },

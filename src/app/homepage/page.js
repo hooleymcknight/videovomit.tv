@@ -31,6 +31,7 @@ export default async function Home ({ searchParams }) {
         liveStreams = await areYouLive(oauthCode);
     }
     else if (liveStreams?.clientId) {
+        console.log('reauth')
         reauthorizing = liveStreams.clientId;
     }
     else if (liveStreams?.length) {

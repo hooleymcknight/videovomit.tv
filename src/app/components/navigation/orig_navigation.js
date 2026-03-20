@@ -150,8 +150,42 @@ const Navbar = () => {
                     <div className="mobile-nav-toggle" onClick={(e) => {mobileMenuToggleHandler(e)}}>
                         <a className="main-nav-toggle" href="#main-nav"><i>Menu</i></a>
                     </div>
-                    <div className="nav-items--container">
-                        <div className="nav-item"></div>
+                    <div ref={intentRef} onMouseOut={mouseOutHandler}
+                        className={`${isHovering ? "nav-links hover" : "nav-links"}`}
+                    >
+                        {Object.keys(navLinks).map(x => 
+                            <div
+                                key={x} className="nav-item"
+                                data-text={navLinks[`${x}`].text}
+                                data-image={!!navLinks[`${x}`].image.length}
+                                onMouseOver={(e) => {mouseOverHandler(e)}}
+                                // onClick={(e) => {mobileNavItemClickHandler(e)}}
+                            >
+                                <Link className="top-link" href={pageRoutes[`${x}`]} alt={navLinks[`${x}`].text}>
+                                    {navLinks[`${x}`].image.length ?
+                                        
+                                        <Image src={`${navPath}/${navLinks[`${x}`].image}`} alt={navLinks[`${x}`].text} width={0} height={0} style={{ width: 'auto', height: '80px', }} />
+                                    :
+                                        navLinks[`${x}`].text
+                                    }
+                                </Link>
+                                {navLinks[`${x}`].dropdown ?
+                                    <div className="dropdown" data-menu={navLinks[`${x}`].text}>
+                                        {Object.keys(navLinks[`${x}`].dropdown).map(y => 
+                                            <Link key={y} href={pageRoutes[`${y}`]} alt={navLinks[`${x}`].dropdown[`${y}`].text}>
+                                                {/* {navLinks[`${x}`].dropdown[`${y}`].text} */}
+                                                {navLinks[`${x}`].dropdown[`${y}`].image.length ?
+                                                    
+                                                    <Image src={`${navPath}/${navLinks[`${x}`].dropdown[`${y}`].image}`} alt={navLinks[`${x}`].dropdown[`${y}`].text} width={0} height={0} style={{ width: 'auto', height: '80px', }} />
+                                                :
+                                                    navLinks[`${x}`].dropdown[`${y}`].text
+                                                }
+                                            </Link>
+                                        )}
+                                    </div>
+                                : ''}
+                            </div>
+                        )}
                         <div className="nav-item">
                             <Link className="account" href={displayName ? pageRoutes.account : pageRoutes.signin} alt={displayName ? 'account page' : 'sign in'}>
                                 <FontAwesomeIcon icon={faUser} />

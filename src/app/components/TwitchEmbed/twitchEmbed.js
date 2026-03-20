@@ -37,7 +37,8 @@ export default function TwitchEmbed (props) {
                 <div id="twitch-embed"></div>
                 <script src="https://embed.twitch.tv/embed/v1.js"></script>
             </div>
-            { props.reauth && session?.user?.type === 'admin' ? 
+            {/* { props.reauth && session?.user?.type === 'admin' ?  */}
+            { props.reauth ?
                 <>
                     <a href={twitchAuthUrl} alt="Reconnect twitch" target="_blank" style={{ marginTop: '40px' }}>Reauthorize Twitch</a>
                 </>

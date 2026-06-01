@@ -1,170 +1,70 @@
-'use client';
-import { useCallback } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useSession } from '@/app/SessionProvider';
-import { useHoverIntent } from 'react-use-hoverintent';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import pageRoutes from "@/pageRoutes";
-import './navigation.css';
-import { faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
+"use client";
 
-// dropdown object format --> { pageroute: text }
+import { useRef, useState } from "react";
+import './osn.css';
 
-const navPath = '../../../assets/nav';
+/**
+ * OverlapStickerNav
+ * -----------------
+ * Stickers that VISUALLY overlap, while each one's CLICK/TOUCH target is its own
+ * silhouette — so they never share a hit region (WCAG 2.5.8 stays satisfied as long
+ * as each sticker is >= 24x24px; these are 120px).
+ *
+ * Two load-bearing tricks:
+ *  1. `clip-path` on the <a> itself clips the *hit area*, not just the pixels. A click
+ *     on a transparent corner falls through to whatever is behind it.
+ *  2. Hovering / focusing a sticker raises its z-index AND KEEPS IT THERE (persistent
+ *     bring-to-front) via a counter that only ever increases.
+ */
 
-export const navLinks = {
-    /* 'homepage': {
-        'text': 'homepage',
-        'image': '',
-    }, */
-    'content': {
-        'text': 'content',
-        'image': 'nav_content.webp',
-        'dropdown': {
-            'playlist': {
-                'text': 'playlist',
-                'image': '',
-            },
-            'archive': {
-                'text': 'archive',
-                'image': 'nav_vod_archives.webp',
-            },
-            'podcasts': {
-                'text': 'podcasts',
-                'image': 'nav_podcasts.webp',
-            },
-        }
-    },
-    'merch': {
-        'text': 'merch',
-        'image': 'nav_merch.webp',
-        // 'dropdown': {
-        //     'browseAll': {
-        //         'text': 'browse all',
-        //         'image': '',
-        //     },
-        //     'shirts': {
-        //         'text': 'shirts',
-        //         'image': '',
-        //     },
-        //     'headware': {
-        //         'text': 'headware',
-        //         'image': '',
-        //     },
-        //     'sweatshirts': {
-        //         'text': 'sweatshirts + hoodies',
-        //         'image': '',
-        //     },
-        //     'drinkware': {
-        //         'text': 'drinkware',
-        //         'image': '',
-        //     },
-        //     'misc': {
-        //         'text': 'misc',
-        //         'image': '',
-        //     },
-        // }
-    },
-    'community': {
-        'text': 'community',
-        'image': '',
-        'dropdown': {
-            'battleArcade': {
-                'text': 'battle arcade',
-                'image': 'nav_battlearcade.webp',
-            },
-            'vvod': {
-                'text': 'videovomit on demand',
-                'image': '',
-            },
-            'guessTheKiller': {
-                'text': 'guess the killer',
-                'image': '',
-            },
-        }
-    },
-    'contact': {
-        'text': 'contact',
-        'image': '',
-    },
-}
+const navItems = [
+  { label: "Home",          href: "/homepage",                shape: "home",         c: "#020203", rot: -5, src: "/assets/nav/nav_home.webp" },
+  { label: "Content",       href: "/content",                 shape: "content",      c: "#040404", rot: -2, src: "/assets/nav/nav_content.webp" },
+  { label: "Podcasts",      href: "/content/podcasts",        shape: "podcasts",     c: "#1b191b", rot: -4, src: "/assets/nav/nav_podcasts.webp" },
+  { label: "VOD Archives",  href: "/content/archive",         shape: "archives",     c: "#010101", rot: -4, src: "/assets/nav/nav_vod_archives.webp" },
+  { label: "Merch",         href: "/merch",                   shape: "merch",        c: "#74b81f", rot: 1,  src: "/assets/nav/nav_merch2.webp" },
+  { label: "Battle Arcade", href: "/community/battle-arcade", shape: "battlearcade", c: "#222222", rot: 4,  src: "/assets/nav/nav_battlearcade.webp" },
+];
 
-const Navbar = () => {
-    const session = useSession().sessionData;
-    const displayName = session?.user?.username;
+export default function OverlapStickerNav() {
+    // z-index per sticker, kept in state. The ref only ever counts up, so a sticker
+    // pulled up to the front stays there after mouseout.
+    const [zs, setZs] = useState(() => navItems.map((_, i) => i + 1));
+    const topZ = useRef(navItems.length);
 
-    const [isHovering, intentRef, setIsHovering] = useHoverIntent({
-        timeout: 100,
-        sensitivity: 10,
-        interval: 200,
-    });
+    const bringToFront = (i) => {
+        topZ.current += 1;
+        setZs((prev) => {
+        const next = [...prev];
+        next[i] = topZ.current;
+        return next;
+        });
+    };
 
-    // const mouseOverHandler = useCallback(() => {
-    //     () => setIsHovering(true);
-    // }, [setIsHovering]);
-
-    const mouseOutHandler = useCallback(() => {
-        const currentActive = document.querySelectorAll('.nav-item.active');
-        if (currentActive.length) currentActive[0].classList.remove('active');
-        () => setIsHovering(false);
-    }, [setIsHovering]);
-
-    const mouseOverHandler = (e) => {
-        e.target.closest('.nav-item').classList.add('active');
-    }
-
-    const mobileMenuToggleHandler = (e) => {
-        e.preventDefault();
-        let toggle = e.target.closest('.mobile-nav-toggle');
-        if ( toggle.classList.contains('active-menu') ) {
-            toggle.classList.remove( 'active-menu' );
-        } else {
-            toggle.classList.add( 'active-menu' );
-        }
-    }
-
-    const mobileNavItemClickHandler = (e) => {
-        e.preventDefault();
-        const navItem = e.target.closest('.nav-item');
-        if (!navItem.classList.contains('mobile-active')) {
-            const thisText = navItem.dataset.text;
-        
-            const prevActive = document.querySelectorAll(`.nav-item.mobile-active:not([data-text="${thisText}"])`);
-            if (prevActive.length) {
-                prevActive.forEach((prev) => { prev.classList.remove('mobile-active') });
-            }
-
-            navItem.classList.add('mobile-active');
-        }
-    }
-
-    return(
-        <nav>
-            <div className="nav-inner">
-                <Link href={pageRoutes.homepage} alt="homepage">
-                    <Image src={`${navPath}/nav_home.webp`} alt="videovomit logo" width={0} height={0} style={{ width: 'auto', height: '80px', }} />
-                </Link>
-
-                <div className="nav-links-container">
-                    <div className="mobile-nav-toggle" onClick={(e) => {mobileMenuToggleHandler(e)}}>
-                        <a className="main-nav-toggle" href="#main-nav"><i>Menu</i></a>
-                    </div>
-                    <div className="nav-items--container">
-                        <div className="nav-item"></div>
-                        <div className="nav-item">
-                            <Link className="account" href={displayName ? pageRoutes.account : pageRoutes.signin} alt={displayName ? 'account page' : 'sign in'}>
-                                <FontAwesomeIcon icon={faUser} />
-                                <span className="mobile-text">
-                                    {displayName ? displayName : 'log in'}
-                                </span>
-                            </Link>
-                        </div>
+    return (
+        <div className="osn-wrap">
+            <nav>
+                <div className="nav-inner">
+                    <div className="osn-nav" aria-label="Primary">
+                        {navItems.map((item, i) => (
+                        <a
+                            key={item.href}
+                            href={item.href}
+                            aria-label={item.label}
+                            className={`osn-sticker osn-${item.shape}`}
+                            style={{ "--c": item.c, "--rot": `${item.rot}deg`, zIndex: zs[i] }}
+                            onMouseEnter={() => bringToFront(i)}
+                            onFocus={() => bringToFront(i)}
+                        >
+                            <span className="osn-fill">
+                            <img src={item.src} alt="" height={100} width={160} className="osn-art" aria-hidden="true" />
+                            {/* <span className="osn-label">{item.label}</span> */}
+                            </span>
+                        </a>
+                        ))}
                     </div>
                 </div>
-            </div>
-        </nav>
-    )
+            </nav>
+        </div>
+    );
 }
-
-export default Navbar;

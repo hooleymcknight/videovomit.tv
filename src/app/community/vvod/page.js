@@ -83,9 +83,20 @@ export default function VVOD () {
     }, []);
 
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start py-32 px-16 sm:items-start">
+        <div className="flex min-h-screen items-center justify-center py-48">
+            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start px-16 sm:items-start">
                 <h1 style={{ marginBottom: '20px' }}>VVOD Games Played So Far</h1>
+
+                <select>
+                    <optgroup label="Guests">
+                        <option>NiftyKatie</option>
+                        <option>Oaklore Gaming</option>
+                    </optgroup>
+                    <optgroup label="Events">
+                        <option>VVOD</option>
+                        <option>Speedrunning</option>
+                    </optgroup>
+                </select>
 
                 {userType === 'admin' ?
                     <div className="add-game">
@@ -111,7 +122,7 @@ export default function VVOD () {
                 '' }
 
                 {gamesData.length ?
-                    <div className="games-data">
+                    <div className="games-data grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[20px]">
                         {consoles.sort().map(x =>
                             <div key={x} className="platform-section">
                                 <div className="console-heading">

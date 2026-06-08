@@ -24,6 +24,7 @@ export default async function RootLayout ({ children, params }) {
                 <meta property="og:title" content={metadata.title} />
                 <meta property="og:description" content={metadata.description} />
                 <meta property="og:image" content="https://videovomit.com/paperjam_800.png" />
+                <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
             </head>
             <body
                 className={`antialiased`}

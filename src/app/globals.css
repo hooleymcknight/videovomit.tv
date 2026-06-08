@@ -44,7 +44,8 @@ html, body {
 
 body {
     color: var(--foreground);
-    font-family: MSW, VCR, Arial, Helvetica, sans-serif;
+    /* font-family: , sans-serif; */
+    font-family: "Roboto", MSW, VCR, Arial, Helvetica, sans-serif;
 }
 
 body.coming-soon {
@@ -52,7 +53,7 @@ body.coming-soon {
 }
 
 h1, h2 {
-    font-family: 'MSW';
+    font-family: "Roboto", 'MSW';
 }
 
 h1 {

@@ -25,23 +25,15 @@ const consoles = [
 
 export default function VVOD () {
     const [gamesData, setGamesData] = useState([]);
-    const session = useSession();
-    const userType = session?.sessionData?.user?.type;
+    const role = useSession()?.session?.user?.role;
 
     const loadData = async () => {
-        let res = await pullGamesData()
-        .then((response) => {
-            if (response) {
-                setGamesData([...response]);
-            }
-            else {
-                console.error('No game data to load.')
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            return 'There has been an unknown error. Please refresh and try again.'
-        });
+        const res = await pullGamesData(gameData);
+        if (res.ok && res.length) { // not sure if length check is helpful.
+            setGamesData([...res]);
+        } else {
+            window.alert(`There was an error retrieving game entries: ${res.message}`);
+        }
     }
 
     const addGame = (e) => {
@@ -59,21 +51,13 @@ export default function VVOD () {
             platform: platform.toLowerCase(),
         }
 
-        let res = addGameData(gameData)
-        .then((response) => {
-            if (response) {
-                window.alert(`There was an error adding the game: ${response}`);
-            }
-            else {
-                // everything is cool
-                window.alert('Game added!');
-                loadData();
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            return 'There has been an unknown error. Please refresh and try again.'
-        });
+        const res = await addGameData(gameData);
+        if (res.ok) {
+            window.alert('Game added!');
+            loadData();
+        } else {
+            window.alert(`There was an error adding the game: ${res.message}`);
+        }
     }
 
     useEffect(() => {
@@ -98,7 +82,7 @@ export default function VVOD () {
                     </optgroup>
                 </select>
 
-                {userType === 'admin' ?
+                {role === 'admin' ?
                     <div className="add-game">
                         <h2>Add Game:</h2>
 

@@ -1,9 +1,6 @@
 'use client';
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useSession } from "../SessionProvider";
-import pageRoutes from "@/pageRoutes";
 
 import AccountInfo from "./components/accountInfo";
 import EditEvents from "./components/editEvents";
@@ -12,16 +9,12 @@ import Messages from "./components/messages";
 import '../globals.css';
 import './account.css';
 
-const userTabs = ['Account'];
-const adminTabs = ['Account', 'Events', 'Messages'];
-
 export default function Account() {
-    const [activeTab, setActiveTab] = useState(userTabs[0]);
+    const acctTabs = ['Account'];
+    const [activeTab, setActiveTab] = useState(acctTabs[0]);
 
     const session = useSession().sessionData;
     const displayName = session?.user?.username;
-
-    let acctTabs = session?.user?.type === 'admin' ? adminTabs : userTabs;
 
     return (
         <div className="account main-container grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -31,16 +24,21 @@ export default function Account() {
                     {displayName}
                 </div>
 
-                <div className="account-page-content">
-                    <div className="account-sidebar">
+                <div className="account-page-content md: flex justify-between">
+                    <div className="account-sidebar md:w-[20%] md:flex-col flex gap-[20px] mb-[40px]">
                         {
                             acctTabs.map(x => 
-                                <button key={x} onClick={() => {setActiveTab(x)}} className={`acct-tab ${activeTab === x ? 'active-tab' : ''}`}>{x}</button>
+                                <button key={x} onClick={() => {setActiveTab(x)}}
+                                    className={`acct-tab bg-[#000000cc] px-[8px] py-[12px] 
+                                        ${activeTab === x ? 'active-tab' : ''}`}
+                                >
+                                    {x}
+                                </button>
                             )
                         }
                     </div>
 
-                    <div className="acct-info-group">
+                    <div className="acct-info-group md:w-[70%]">
                         {
                             activeTab === 'Account' ? <AccountInfo session={session} /> : ''
                         }

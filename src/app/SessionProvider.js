@@ -3,15 +3,15 @@ import { createContext, useContext, useState } from "react";
 
 const SessionContext = createContext();
 
-export default function SessionProvider({ children, session }) {
-    const [sessionData, setSessionData] = useState(session);
+export default function SessionProvider({ children, initialSession }) {
+    const [session, setSession] = useState(initialSession);
 
     const updateSession = (newData) => {
-        setSessionData(prevData => ({ ...prevData, ...newData }));
+        setSession(prevData => ({ ...prevData, ...newData }));
     };
 
     return (
-        <SessionContext.Provider value={{sessionData, updateSession}}>
+        <SessionContext.Provider value={{session, updateSession}}>
             {children}
         </SessionContext.Provider>
     );

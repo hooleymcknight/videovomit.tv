@@ -29,7 +29,7 @@ export default async function RootLayout ({ children, params }) {
             <body
                 className={`antialiased`}
             >
-                <SessionProvider session={session}>
+                <SessionProvider initialSession={session}>
                     <Navbar />
                     {children}
                 </SessionProvider>

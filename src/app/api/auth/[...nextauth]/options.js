@@ -1,11 +1,8 @@
 // import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import TwitchProvider from "next-auth/providers/twitch";
-import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from 'bcryptjs';
-
-const db = new PrismaClient();
 
 export const options = {
     providers: [
@@ -16,7 +13,7 @@ export const options = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                const allAccounts = await db.users.findFirst({
+                const user = await db.users.findFirst({
                     where: {
                         AND: [
                             {
@@ -28,19 +25,17 @@ export const options = {
                         ]
                     }
                 });
-
-                const isMatch = bcrypt.compareSync(credentials?.password, allAccounts?.password);
-                if (allAccounts && isMatch) {
-                    return allAccounts;
-                }
-                else if (allAccounts && !isMatch && credentials?.password === allAccounts?.password) {
-                    allAccounts.needsReset = true;
-                    return allAccounts;
-                }
-                else {
-                    return null;
-                }
-            }
+                if (!user) return null;
+                const valid = bcrypt.compareSync(credentials.password, user.password);
+                if (!valid) return null;
+                // returning the bare minimum for session...
+                return {
+                    id: user.id,
+                    name: user.username,
+                    email: user.email,
+                    role: user.role ?? "user",   // someday, roles might matter
+                };
+            },
         }),
         TwitchProvider({
             clientId: process.env.TWITCH_CLIENT_ID,
@@ -55,12 +50,14 @@ export const options = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.user = user;
+                token.id = user.id;
+                token.role = user.role;
             }
             return token;
         },
         async session({ session, token }) {
-            session.user = token.user;
+            session.user.id = token.id;
+            session.user.role = token.role;
             return session;
         }
     }

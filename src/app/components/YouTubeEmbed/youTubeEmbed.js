@@ -1,7 +1,6 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-//
 const embedVideo = (id, title) => {
     return `<iframe width="533" height="300"
         src="https://www.youtube.com/embed/${id}"
@@ -26,6 +25,7 @@ export default function YouTubeEmbed (props) {
                 a.href = `https://www.youtube.com/watch?v=${videoId}`;
                 a.textContent = title;
                 a.target = '_blank'; // Open in new tab
+                li.dataset.publishDate = item.contentDetails.videoPublishedAt;
                 li.innerHTML = embedVideo(videoId, title);
                 listElement.appendChild(li);
             });

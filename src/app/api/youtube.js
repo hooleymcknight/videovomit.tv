@@ -15,15 +15,19 @@ export default async function getPlaylistItems() {
         const response = await fetch(`${UPLOADS_URL}`);
         if (!response.ok) {
             // throw new Error(`HTTP error! status: ${response.status}`);
-            console.log('yt error')
+            console.log('yt error', response)
             return false;
         }
         
         const data = await response.json();
-        const ids = data.items.map(x => x.snippet.resourceId.videoId);
-        return { data: data.items, ids: ids };
+        // console.log(data.items.map(x => x.contentDetails.videoPublishedAt));
+        // const ids = data.items.map(x => x.snippet.resourceId.videoId);
+        // saving these maps for a bit until I copy down the shape of data.items[x]
+
+        return data.items;
 
     } catch (error) {
         console.error('Error fetching playlist items:', error);
+        return false;
     }
 }

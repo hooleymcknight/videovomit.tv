@@ -1,15 +1,15 @@
 'use client';
-import './contact.css';
+import './connect.css';
 import { useForm } from 'react-hook-form';
 import { insertNewMessage } from '../account/components/server/updateMessages';
 
-export default function Contact() {
+export default function Connect() {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
         let res = insertNewMessage(data);
         if (res) {
-            // act like your loading pls
+            // act like youre loading pls
             setTimeout(() => {
                 window.alert('Message successfully sent!');
                 document.querySelector('#contact-form').reset();

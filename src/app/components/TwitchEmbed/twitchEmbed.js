@@ -1,13 +1,7 @@
 'use client';
-import { useState, useEffect } from "react";
-import { useSession } from "@/app/SessionProvider";
+import { useEffect } from "react";
 
 export default function TwitchEmbed (props) {
-    const [isLive, setIsLive] = useState(false);
-    const session = useSession().sessionData;
-
-    const twitchAuthUrl = props.reauth ? `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${props.reauth}&redirect_uri=http://localhost:3000/homepage&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls` : '#';
-
     const embedTwitch = () => {
         if (!document.querySelectorAll('#twitch-embed')) {
             setTimeout(embedTwitch, 100);
@@ -37,14 +31,6 @@ export default function TwitchEmbed (props) {
                 <div id="twitch-embed"></div>
                 <script src="https://embed.twitch.tv/embed/v1.js"></script>
             </div>
-            {/* { props.reauth && session?.user?.type === 'admin' ?  */}
-            { props.reauth ?
-                <>
-                    <a href={twitchAuthUrl} alt="Reconnect twitch" target="_blank" style={{ marginTop: '40px' }}>Reauthorize Twitch</a>
-                </>
-            :
-                <></>
-            }
         </>
     );
 }

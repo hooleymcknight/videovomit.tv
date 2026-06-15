@@ -8,23 +8,25 @@ datasource db {
 }
 
 model users {
-  id       Int     @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   username String? @db.VarChar(45)
-  password String? @db.Text
+  password String? @db.LongText
+  type     String? @db.VarChar(45)
   fname    String? @db.VarChar(45)
   lname    String? @db.VarChar(45)
-  type     String? @db.VarChar(45)
-  email    String? @db.Text
+  email    String? @db.VarChar(45)
 }
 
 model admin {
-  id    Int?
-  field String  @id @unique(map: "field_UNIQUE") @db.VarChar(45)
-  value String? @db.LongText
+  id      Int?
+  field   String    @id @unique(map: "field_UNIQUE") @db.VarChar(45)
+  value   String?   @db.LongText
+  updated DateTime? @db.DateTime(0)
+  expiry  DateTime? @db.DateTime(0)
 }
 
 model vvod {
   id       Int     @id @default(autoincrement())
-  title    String? @db.VarChar(45)
+  title    String? @db.VarChar(85)
   platform String? @db.VarChar(45)
 }

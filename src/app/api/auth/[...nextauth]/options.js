@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import TwitchProvider from "next-auth/providers/twitch";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from 'bcryptjs';
+import { db } from "@/lib/db";
 
 export const options = {
     providers: [

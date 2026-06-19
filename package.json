@@ -9,6 +9,7 @@
     "start": "next start",
     "export": "next export",
     "lint": "eslint",
+    "pm2start": "pm2 start npm --name 'videovomit.tv' -- start",
     "deploy": "pm2 delete all && pm2 start npm --name 'videovomit.tv' -- start",
     "fulldeploy": "git fetch && git pull origin main && pm2 delete all && npm run build && pm2 start npm --name 'videovomit.tv' -- start"
   },

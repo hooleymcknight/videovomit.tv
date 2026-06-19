@@ -28,7 +28,7 @@ export default function VVOD () {
     const role = useSession()?.session?.user?.role;
 
     const loadData = async () => {
-        const res = await pullGamesData(gameData);
+        const res = await pullGamesData(gamesData);
         if (res.ok && res.length) { // not sure if length check is helpful.
             setGamesData([...res]);
         } else {
@@ -46,12 +46,12 @@ export default function VVOD () {
             return;
         }
 
-        let gameData = {
+        let newGameData = {
             title: title,
             platform: platform.toLowerCase(),
         }
 
-        const res = await addGameData(gameData);
+        const res = await addGameData(newGameData);
         if (res.ok) {
             window.alert('Game added!');
             loadData();

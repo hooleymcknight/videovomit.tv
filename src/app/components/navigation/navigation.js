@@ -32,6 +32,8 @@ export default function OverlapStickerNav() {
     const [zs, setZs] = useState(() => navItems.map((_, i) => i + 1));
     const topZ = useRef(navItems.length);
 
+    const ROWS = [navItems.slice(0, 3), navItems.slice(3)];  // [[home,content,podcasts],[archives,merch,battle]]
+
     const bringToFront = (i) => {
         topZ.current += 1;
         setZs((prev) => {
@@ -46,22 +48,28 @@ export default function OverlapStickerNav() {
             <nav>
                 <div className="nav-inner">
                     <div className="osn-nav" aria-label="Primary">
-                        {navItems.map((item, i) => (
-                        <a
-                            key={item.href}
-                            href={item.href}
-                            aria-label={item.label}
-                            className={`osn-sticker osn-${item.shape}`}
-                            style={{ "--c": item.c, "--rot": `${item.rot}deg`, zIndex: zs[i] }}
-                            onMouseEnter={() => bringToFront(i)}
-                            onFocus={() => bringToFront(i)}
-                            tabIndex="0"
-                        >
-                            <span className="osn-fill">
-                            <img src={item.src} alt="" height={100} width={160} className="osn-art" aria-hidden="true" />
-                            {/* <span className="osn-label">{item.label}</span> */}
-                            </span>
-                        </a>
+                        {ROWS.map((row, r) => (
+                            <div className="osn-row" key={r}>
+                            {row.map((item, c) => {
+                                const i = r * 3 + c; // flat index, still lines up with zs[i] / bringToFront(i). r = row
+                                return (
+                                    <a
+                                        key={item.href}
+                                        href={item.href}
+                                        aria-label={item.label}
+                                        className={`osn-sticker osn-${item.shape}`}
+                                        style={{ "--c": item.c, "--rot": `${item.rot}deg`, zIndex: zs[i] }}
+                                        onMouseEnter={() => bringToFront(i)}
+                                        onFocus={() => bringToFront(i)}
+                                        tabIndex="0"
+                                    >
+                                        <span className="osn-fill">
+                                        <img src={item.src} alt="" height={100} width={160} className="osn-art" aria-hidden="true" />
+                                        </span>
+                                    </a>
+                                );
+                            })}
+                            </div>
                         ))}
                     </div>
                 </div>

@@ -1,22 +1,17 @@
 'use client';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import EmblaCarousel from './Embla/EmblaCarousel';
+import './Embla/embla.css';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 
+const OPTIONS = { containScroll: false }
+
 export default function YtCarousel (props) {
-    console.log(props.items)
 
     return (
-        <div className="flex flex-wrap gap-[20px]">
+        <div className="w-full">
             {
                 props.items && props.items.length ?
-                    props.items.map(x => 
-                        <div className="w-[450px]" data-purpose="yt-embed-container" key={x.id}>
-                            <LiteYouTubeEmbed
-                                id={x.snippet.resourceId.videoId}
-                                title={x.snippet.title}
-                            />
-                        </div>
-                    )
+                    <EmblaCarousel slides={props.items} options={OPTIONS} />
                 :
                 null
             }

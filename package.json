@@ -23,6 +23,7 @@
     "@prisma/client": "^6.5.0",
     "bcryptjs": "^3.0.0",
     "dotenv": "^17.3.1",
+    "embla-carousel-react": "^8.6.0",
     "next": "16.1.0",
     "next-auth": "^4.24.11",
     "open": "^11.0.0",

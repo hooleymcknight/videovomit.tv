@@ -27,6 +27,26 @@ nav {
     display: flex;
     align-items: center;
 }
+.osn-row { display: contents; }
+
+@media (max-width: 500px) {
+    .osn-nav { flex-direction: column; }
+
+    .osn-row {
+        display: flex; /* rows become real flex rows again */
+        justify-content: center;
+        align-items: center;
+    }
+    .osn-row:first-of-type {
+        margin-bottom: -10px;
+    }
+
+    /* now each row has its own first child to reset */
+    .osn-row > .osn-sticker:first-child { margin-left: 0; }
+
+    /* two stacked rows need vertical room — see note below */
+    nav { height: auto; min-height: var(--nav-height); }
+}
 
 .osn-sticker {
     position: relative;
@@ -41,9 +61,11 @@ nav {
     transform: rotate(var(--rot,0deg));
     transition: transform .22s cubic-bezier(.34,1.56,.64,1), filter .22s ease;
 }
-.osn-sticker:first-child {
+
+/* desktop: ONLY the true first sticker (Home) resets its leading edge */
+.osn-row:first-child > .osn-sticker:first-child {
     margin-left: 0;
-    margin-right: -16px;
+    margin-right: -16px;   /* Home's tighter overlap into Content */
 }
 
 .osn-fill {

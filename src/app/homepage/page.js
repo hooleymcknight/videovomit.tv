@@ -27,7 +27,7 @@ export default async function Home () {
 
     return (
         <>
-            <TwitchEmbed live={!!isLive.length} />
+            {/* <TwitchEmbed live={!!isLive.length} /> */}
             {/* <YouTubeEmbed items={ytUploads} /> */}
             {/* <iframe width="720" height="405" src={`https://www.youtube.com/embed/playlist?list=${PLAYLIST_ID}`} frameBorder="0" allowFullScreen allow={allowList} /> */}
 

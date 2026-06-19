@@ -41,8 +41,8 @@ export default function YouTubeEmbed (props) {
     }, []);
 
     return (
-        <div className="yt-uploads">
-            <div id="playlist-items"></div>
+        <div className="yt-uploads w-screen my-[40px] mx-[calc(50% - 50vw)] overflow-x-scroll">
+            <div className="flex w-fit justify-center gap-[20px]" id="playlist-items"></div>
         </div>
     );
 }

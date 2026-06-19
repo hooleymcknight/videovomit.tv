@@ -5,7 +5,7 @@ import { areYouLive } from '../api/twitch';
 import getPlaylistItems from '../api/youtube';
 import TwitchEmbed from '../components/TwitchEmbed/twitchEmbed';
 import YouTubeEmbed from '../components/YouTubeEmbed/youTubeEmbed';
-import './homepage.css';
+import YtCarousel from '../components/YtCarousel/YtCarousel';
 
 let isLive = false;
 let ytUploads;
@@ -26,12 +26,12 @@ export default async function Home () {
     // again, unused but I'm leaving them here for now. there are decisions to be made before I go deletin'
 
     return (
-        <div className="flex min-h-screen items-center justify-center w-full">
-            <main className="flex min-h-screen w-full max-w-[1200px] flex-col items-center justify-start py-32 px-16 sm:items-start">
-                <TwitchEmbed live={!!isLive.length} />
-                <YouTubeEmbed items={ytUploads} />
-                {/* <iframe width="720" height="405" src={`https://www.youtube.com/embed/playlist?list=${PLAYLIST_ID}`} frameBorder="0" allowFullScreen allow={allowList} /> */}
-            </main>
-        </div>
+        <>
+            <TwitchEmbed live={!!isLive.length} />
+            {/* <YouTubeEmbed items={ytUploads} /> */}
+            {/* <iframe width="720" height="405" src={`https://www.youtube.com/embed/playlist?list=${PLAYLIST_ID}`} frameBorder="0" allowFullScreen allow={allowList} /> */}
+
+            <YtCarousel items={ytUploads} />
+        </>
     );
 }

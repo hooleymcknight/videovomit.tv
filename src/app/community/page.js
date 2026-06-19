@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import pageRoutes from '@/pageRoutes';
-import { navLinks } from '../components/navigation/navigation';
+import navLinks from '../components/navigation/navigation';
 import { useSession } from '../SessionProvider';
 import '../globals.css';
 import './community.css';

@@ -28,11 +28,11 @@ export default function VVOD () {
     const role = useSession()?.session?.user?.role;
 
     const loadData = async () => {
-        const res = await pullGamesData(gamesData);
-        if (res.ok && res.length) { // not sure if length check is helpful.
+        const res = await pullGamesData();
+        if (!!res?.length) { // not sure if length check is helpful.
             setGamesData([...res]);
         } else {
-            window.alert(`There was an error retrieving game entries: ${res.message}`);
+            window.alert(`There was an error retrieving game entries: ${res}`);
         }
     }
 
@@ -70,17 +70,6 @@ export default function VVOD () {
         <div className="flex min-h-screen items-center justify-center py-48">
             <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start px-16 sm:items-start">
                 <h1 style={{ marginBottom: '20px' }}>VVOD Games Played So Far</h1>
-
-                <select>
-                    <optgroup label="Guests">
-                        <option>NiftyKatie</option>
-                        <option>Oaklore Gaming</option>
-                    </optgroup>
-                    <optgroup label="Events">
-                        <option>VVOD</option>
-                        <option>Speedrunning</option>
-                    </optgroup>
-                </select>
 
                 {role === 'admin' ?
                     <div className="add-game">

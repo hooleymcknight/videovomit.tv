@@ -26,7 +26,7 @@
 
 /** =============== take 2 ====================== */
 
-.line-1{
+.line-1 {
     font-family: 'VCR';
     position: relative;
     top: 50%;  
@@ -42,18 +42,39 @@
 }
 
 /* Animation */
-.anim-typewriter{
+.anim-typewriter {
     --steps: 14;
+    --border-color: #bd09f3;
+    --final-width: 294px;
     animation: typewriter 4s steps(var(--steps)) 5s 1 normal both,
              blinkTextCursor 500ms steps(var(--steps)) infinite normal;
 }
+.live.anim-typewriter {
+    --border-color: #fff;
+    animation-delay: 2ms;
+    --final-width: 182px;
+    --steps: 9;
+}
+
 @keyframes typewriter{
   from{width: 0;}
   /* to{width: 24em;} */
-  to{width: 294px;}
+  to{width: var(--final-width);}
 }
 @keyframes blinkTextCursor{
-  from{border-right-color: #bd09f3;}
+  from{border-right-color: var(--border-color);}
   to{border-right-color: transparent;}
 }
 
+.live.line-1 {
+    font-family: 'Courier New', Courier, monospace;
+    border-right: 2px solid #cf0404;
+    border-right-color: #cf0404;
+    font-size: 32px;
+    width: 182px;
+    text-align: left;
+    transform: none;
+    letter-spacing: 1;
+    white-space: pre;
+    top: 0;
+}

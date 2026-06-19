@@ -1,0 +1,17 @@
+main {
+    padding: 0 !important;
+    width: 100vw;
+    max-width: unset;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+}
+
+body > div.osn-wrap + div {
+    padding: 0 !important;
+    width: 100vw;
+}
+
+.osn-wrap {
+    display: none;
+}

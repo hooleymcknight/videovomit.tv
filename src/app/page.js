@@ -26,25 +26,19 @@ export default function Home () {
     }, []);
 
     return (
-        <div className="flex min-h-screen items-center justify-center font-sans bg-black dark:bg-black py-48">
-            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start px-16 bg-black dark:bg-black sm:items-start">
-                <div className="mb-20 w-full">
-                    <GlitchText firstSpan="video" secondSpan="vomit" />
-                </div>
-                <Glitch />
-                <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-                    <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-                        {/* videovomit */}
-                    </h1>
-                </div>
-                <div className="flex justify-center mt-20 w-full">
-                    <Typewriter text="coming soon..." />
-                </div>
-            </main>
-
-            {/* <Image className="moth-spider" src="./assets/moth.gif" alt="moth for spider" width={0} height={0} style={{ width: '100px', height: 'auto' }} /> */}
-            
-
+        <div className="bg-black">
+            <div className="mb-20 w-full bg-black">
+                <GlitchText firstSpan="video" secondSpan="vomit" />
+            </div>
+            <Glitch />
+            <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+                <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+                    {/* videovomit */}
+                </h1>
+            </div>
+            <div className="flex justify-center mt-20 w-full">
+                <Typewriter text="coming soon..." />
+            </div>
         </div>
     );
 }

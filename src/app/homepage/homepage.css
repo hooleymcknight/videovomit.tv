@@ -26,6 +26,7 @@
 #playlist-items li {
     width: calc(calc(50vw - 40px) - 8rem);
     height: calc(calc(calc(50vw - 40px) - 8rem) / 1.778);
+    list-style: none;
 }
 
 #playlist-items li iframe {

@@ -55,6 +55,7 @@ export default function OverlapStickerNav() {
                             style={{ "--c": item.c, "--rot": `${item.rot}deg`, zIndex: zs[i] }}
                             onMouseEnter={() => bringToFront(i)}
                             onFocus={() => bringToFront(i)}
+                            tabIndex="0"
                         >
                             <span className="osn-fill">
                             <img src={item.src} alt="" height={100} width={160} className="osn-art" aria-hidden="true" />

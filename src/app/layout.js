@@ -31,7 +31,11 @@ export default async function RootLayout ({ children, params }) {
             >
                 <SessionProvider initialSession={session}>
                     <Navbar />
-                    {children}
+                    <div className="flex min-h-screen items-center justify-center w-full" style={{ paddingTop: 'var(--nav-height)' }}>
+                        <main className="flex min-h-screen w-full max-w-[1200px] flex-col items-center justify-start py-32 px-16 sm:items-start">
+                            {children}
+                        </main>
+                    </div>
                 </SessionProvider>
             </body>
         </html>

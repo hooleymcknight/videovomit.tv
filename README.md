@@ -32,3 +32,4 @@ From there forward, it will receive regular content additions to complete the si
   - battle arcade
 
 - work out the site map w/ videovomit
+- fix the focus ring getting clipped in some of the nav items (mainly home + archives)

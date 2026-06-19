@@ -27,8 +27,8 @@ export default function TwitchEmbed (props) {
 
     return (
         <>
-            <div className="twitch-embed-container" data-active={props.live}>
-                <div id="twitch-embed"></div>
+            <div className="twitch-embed-container w-full" data-active={props.live}>
+                <div id="twitch-embed w-full"></div>
                 <script src="https://embed.twitch.tv/embed/v1.js"></script>
             </div>
         </>

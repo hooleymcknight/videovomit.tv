@@ -1,165 +1,102 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import bcrypt from 'bcryptjs';
-
-const db = new PrismaClient();
-const salt = bcrypt.genSaltSync(12);
+import { db } from "@/lib/db";
 
 const channelName = 'videovomit';
 const clientId = process.env.TWITCH_CLIENT_ID;
 const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-// const accessToken = process.env.TWITCH_APP_TOKEN;
-// const oauthCode = process.env.TWITCH_OAUTH_CODE;
 
-export async function getInitialTokens (clientId, clientSecret, oauthCode) {
-    const result = fetch('https://id.twitch.tv/oauth2/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            client_id: clientId,
-            client_secret: clientSecret,
-            code: oauthCode,
-            grant_type: 'authorization_code',
-            redirect_uri: 'http://localhost:3000'
-        })
-    })
-    .then((res) => {
-        return res.json();
-    })
-    .then((result) => {
-        if (result.message?.includes('Invalid authorization code')) {
-            return { clientId: clientId };
-        }
-        else if (result.access_token) {
-            return result;
-        }
-        else {
-            return { error: result };
-        }
-        // const hashedCurrentPW = bcrypt.hashSync(unhashed, salt);
-        // const isMatch = bcrypt.compareSync(unhashed, hashed);
-    })
-    .catch((err) => {
-        console.error('Error!!!!', err);
-    });
-    return result;
+// this didn't get used...but I'm gonna hold onto it for a sec.
+const formatForDB = (dateObj) => {
+    const YYYY = dateObj.getFullYear();
+    const MM = String(dateObj.getMonth() + 1).padStart(2, 0);
+    const DD = String(dateObj.getDate()).padStart(2, 0);
+    const HH = String(dateObj.getHours()).padStart(2, 0);
+    const mm = String(dateObj.getMinutes()).padStart(2, 0);
+    const ss = String(dateObj.getSeconds()).padStart(2, 0);
+
+    return `${YYYY}-${MM}-${DD} ${HH}:${mm}:${ss}.000`;
 }
 
-const updateDatabaseTokens = async (result) => {
-    console.log('update database tokens')
-    console.log(result);
-    const accessToken = result.access_token || null;
-    const refreshToken = result.refresh_token || null;
-    
-    const newAT = await db.admin.upsert({
-        where: { field: 'twitchAccessToken' },
-        update: { value: result.access_token },
-        create: {
-            field: 'twitchAccessToken',
-            value: result.access_token,
-        }
-    });
-
-    const newRT = await db.admin.upsert({
-        where: { field: 'twitchRefreshToken' },
-        update: { value: result.refresh_token },
-        create: {
-            field: 'twitchRefreshToken',
-            value: result.refresh_token,
-        }
-    });
-
-    return [ newAT, newRT ];
+const isRealDate = (value) => {
+  return value instanceof Date && !isNaN(value.valueOf());
 }
 
-const getAccessTokenFromRefresh = async (oauthCode) => {
-    const refreshToken = (await db.admin.findFirst({
-        where: { field: 'twitchRefreshToken' }
-    }))?.value;
-
-    const response = await fetch(`https://id.twitch.tv/oauth2/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            client_id: clientId,
-            client_secret: clientSecret,
-            grant_type: 'refresh_token',
-            refresh_token: refreshToken,
-        })
-    });
-
-    console.log('response without refresh token', response)
-
-    if (!response.ok) {
-        console.log('oauth', oauthCode)
-        if (oauthCode?.length) {
-            const oac = await db.admin.upsert({
-                where: { field: 'twitchOauthCode' },
-                update: { value: oauthCode },
-                create: {
-                    field: 'twitchOauthCode',
-                    value: oauthCode,
-                }
-            });
-        }
-        else {
-            oauthCode = (await db.admin.findFirst({
-                where: { field: 'twitchOauthCode' }
-            }))?.value;
-        }
-        
-        let result = await getInitialTokens(clientId, clientSecret, oauthCode);
-        if (result.clientId) {
-            console.log('trying to return the client id')
-            return result;
-        }
-        else {
-            const ready = await updateDatabaseTokens(result);
-            console.log('ready', ready);
-            return 'retry';
-        }
-    }
-    
-    // update access token, response.access_token
-    // update refresh token too
-    const ready = await updateDatabaseTokens(await (response.json()));
-    console.log('ready', ready);
-    return 'retry';
-
+const getExpiryDate = (updatedDate, givenExpirySec) => {
+    if (!updatedDate || !givenExpirySec || !isRealDate(updatedDate)) return false;
+    const expiresAt = updatedDate.getTime();
+    return new Date(expiresAt + (givenExpirySec * 1000));
 }
 
-export default async function areYouLive (oauthCode) {
-    const accessToken = (await db.admin.findFirst({
-        where: { field: 'twitchAccessToken' }
-    }))?.value;
-    
+// this function isnt getting used here but it very well might get used later on here or elsewhere
+// so I'm keeping it for now
+const getExpiredStatus = (updatedDate, givenExpirySec) => {
+    const expireDT = getExpiryDate(updatedDate, givenExpirySec);
+    return !expireDT ? false : (new Date() > expireDT);
+}
+
+const fetchStreams = async (token) => {
     const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${channelName}`, {
         headers: {
             'Client-ID': clientId,
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${token}`
         },
         cache: 'no-store',
     });
+    return response;
+}
 
-    console.log('response:', accessToken)
+const getAppToken = async () => {
+    const response = await fetch(`https://id.twitch.tv/oauth2/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            "client_id": clientId,
+            "client_secret": clientSecret,
+            "grant_type": "client_credentials"
+        })
+    });
 
-    if (!response.ok) {
-        console.log(`Twitch API error: ${response.statusText}`);
-        
-        if (response.statusText.toLowerCase().includes('unauthorized')) {
-            const ready = await getAccessTokenFromRefresh(oauthCode);
-            console.log('got at from rt?', ready)
-            return ready;
+    // {"access_token":"ACCESS_TOKEN","expires_in":4914532,"token_type":"bearer"} // ~ 60 days expiry, if this is seconds, which it probably is.
+    if (!response.ok) return false;
+
+    const resJson = await response.json();
+    const accessToken = resJson.access_token;
+    const expiresIn = resJson.expires_in;
+
+    // cache "admin table" w/ timestamp
+    const updatedDate = new Date();
+    const expiryDate = getExpiryDate(updatedDate, expiresIn);
+
+    await db.admin.upsert({
+        where: { field: 'twitchEmbedToken' },
+        update: {
+            value: accessToken,
+            updated: updatedDate,
+            expiry: expiryDate || null,
+        },
+        create: {
+            field: 'twitchEmbedToken',
+            value: accessToken,
+            updated: updatedDate,
+            expiry: expiryDate || null,
         }
-        console.log('here to return false')
-        return false;
-    }
+    });
 
-    const data = await response.json();
-    console.log('data????')
-    return data.data;
+    return accessToken;
+}
+
+export const areYouLive = async () => {
+    let token = (await db.admin.findFirst({
+        where: { field: 'twitchEmbedToken' }
+    }))?.value;
+    
+    let res = await fetchStreams(token);
+
+    if (res.status === 401) { // unauthorized
+        token = await getAppToken();
+        res = await fetchStreams(token);
+    }
+    if (!res.ok) return false;
+
+    const data = await res.json();
+    return data.data; // empty array is offline. non empty is live.
 }

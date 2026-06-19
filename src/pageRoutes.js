@@ -31,8 +31,8 @@ const pageRoutes = {
     'vvod': '/community/vvod',
     'guessTheKiller': '/community/guess-the-killer',
 
-    /* contact */
-    'contact': '/contact',
+    /* connect */
+    'connect': '/connect',
 }
 
 export default pageRoutes;

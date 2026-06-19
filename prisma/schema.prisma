@@ -18,13 +18,82 @@ model users {
 }
 
 model admin {
-  id    Int?
-  field String  @id @unique(map: "field_UNIQUE") @db.VarChar(45)
-  value String? @db.LongText
+  id      Int?
+  field   String    @id @unique(map: "field_UNIQUE") @db.VarChar(45)
+  value   String?   @db.LongText
+  updated DateTime? @db.DateTime(0)
+  expiry  DateTime? @db.DateTime(0)
 }
 
 model vvod {
   id       Int     @id @default(autoincrement())
   title    String? @db.VarChar(45)
   platform String? @db.VarChar(45)
+}
+
+model MediaTag {
+  id        String   @id @default(cuid())
+  name      String                 // display: "Sci-Fi"
+  slug      String   @unique       // normalized key: "sci-fi"
+  createdAt DateTime @default(now())
+
+  videos    VideoTag[]
+  playlists PlaylistTag[]
+}
+
+model Video {
+  id           String    @id @default(cuid())
+  youtubeId    String    @unique
+  title        String
+  description  String?               // optional blurb, if tiles/detail show text
+  duration     Int?                  // seconds — for a runtime badge
+  thumbnailUrl String?               // override only; else derive from youtubeId
+  publishedAt  DateTime?             // when it aired on YouTube
+  createdAt    DateTime  @default(now())  // when it was added to your site
+  updatedAt    DateTime  @updatedAt
+
+  tags         VideoTag[]
+  playlists    PlaylistVideo[]
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  videos      PlaylistVideo[]
+  tags        PlaylistTag[]
+}
+
+model PlaylistVideo {
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  playlistId String
+  video      Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId    String
+  position   Int  // ordering within the playlist
+
+  @@id([playlistId, videoId])
+  @@index([videoId])
+}
+
+model VideoTag {
+  video   Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String
+  tag     MediaTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId   String
+
+  @@id([videoId, tagId])
+  @@index([tagId])  // "all video tiles with tag X" — the filter path
+}
+
+model PlaylistTag {
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  playlistId String
+  tag        MediaTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId      String
+
+  @@id([playlistId, tagId])
+  @@index([tagId])
 }

@@ -1,9 +1,8 @@
 'use server';
-import { PrismaClient } from '@prisma/client';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { db } from '@/lib/db.js'
 
-const db = new PrismaClient();
-
-/* register new user */
 async function validateNewGame(data) {
     const duplicateTitle = await db.vvod.findMany({
         where: {
@@ -21,27 +20,34 @@ async function validateNewGame(data) {
 }
 
 export async function pullGamesData () {
-    const gamesData = await db.vvod.findMany({});
-    return gamesData;
+    try {
+        const gamesData = await db.vvod.findMany({});
+        return gamesData;
+    }
+    catch (e) {
+        console.error(e);
+        return 'Error retrieving VVOD game data.';
+    }
 }
 
 export async function addGameData (gameData) {
+    const session = await getServerSession(options);
+    if (!session || session.user.role !== 'admin') {
+        return 'Not authorized.';
+    }
+
     const duplicateData = await validateNewGame(gameData);
 
     if (!duplicateData) {
-        const addGame = await db.vvod.create({
-            data: {
-                title: gameData.title,
-                platform: gameData.platform,
-            }
-        })
-        .then(() => {
+        try {
+            await db.vvod.create({
+                data: { title: gameData.title, platform: gameData.platform },
+            });
             return true;
-        })
-        .catch((e) => {
+        } catch (e) {
             console.error(e);
-            return 'There has been an unknown error. Please refresh and try again.'
-        });
+            return 'There has been an unknown error. Please refresh and try again.';
+        }
     }
     else {
         return duplicateData;

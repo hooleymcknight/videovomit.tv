@@ -11,6 +11,9 @@ From there forward, it will receive regular content additions to complete the si
 ### Recent updates
 
 - navigation stickers and hover functionality added
+- nav stickers row split on mobile
+- twitch embed looks less bad on mobile, also has a fun typing text thing above it
+- re-worked YT horizontal scroll into an actual carousel
 
 ### Future goals
 
@@ -21,9 +24,6 @@ From there forward, it will receive regular content additions to complete the si
 
 - vvod:
   - create add/edit for admin
-
-- homepage:
-  - re-work YT horizontal scroll into an actual carousel
 
 - build out pages:
   - content

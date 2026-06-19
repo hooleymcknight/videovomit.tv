@@ -3,11 +3,6 @@ import { useState } from "react";
 import { useSession } from "../SessionProvider";
 
 import AccountInfo from "./components/accountInfo";
-import EditEvents from "./components/editEvents";
-import Messages from "./components/messages";
-
-import '../globals.css';
-import './account.css';
 
 export default function Account() {
     const acctTabs = ['Account'];

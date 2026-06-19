@@ -36,7 +36,7 @@ export default function VVOD () {
         }
     }
 
-    const addGame = (e) => {
+    const addGame = async (e) => {
         const container = e.target.closest('.add-game');
         let title = container.querySelector('input#title').value || '';
         let platform = container.querySelector('select#platform').value || '';

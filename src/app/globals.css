@@ -47,6 +47,11 @@ body {
     color: var(--foreground);
     /* font-family: , sans-serif; */
     font-family: "Roboto", MSW, VCR, Arial, Helvetica, sans-serif;
+    --nav-height-padding: 0;
+}
+
+body[nav-style="sticky"] {
+    --nav-height-padding: var(--nav-height);
 }
 
 body.coming-soon {

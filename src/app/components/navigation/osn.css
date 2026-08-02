@@ -4,9 +4,12 @@
     display: flex;
     justify-content: center;
     padding: 2rem 0;
-    position: fixed;
     z-index: 100;
     width: 100vw;
+}
+
+body[nav-style="sticky"] .osn-wrap {
+    position: fixed;
 }
 
 nav {

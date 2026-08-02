@@ -28,10 +28,11 @@ export default async function RootLayout ({ children, params }) {
             </head>
             <body
                 className={`antialiased`}
+                // nav-style="sticky"
             >
                 <SessionProvider initialSession={session}>
                     <Navbar />
-                    <div className="flex min-h-screen items-center justify-center w-full" style={{ paddingTop: 'var(--nav-height)' }}>
+                    <div className="flex min-h-screen items-center justify-center w-full" style={{ paddingTop: 'var(--nav-height-padding)' }}>
                         <main className="flex min-h-screen w-full max-w-[1200px] flex-col items-center justify-start py-24 md:py-32 px-6 md:px-16 sm:items-start">
                             {children}
                         </main>

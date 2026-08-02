@@ -29,7 +29,7 @@ export default function VVOD () {
 
     const loadData = async () => {
         const res = await pullGamesData();
-        if (!!res?.length) { // not sure if length check is helpful.
+        if (!!res?.length && typeof(res) !== 'string') { // not sure if length check is helpful.
             setGamesData([...res]);
         } else {
             window.alert(`There was an error retrieving game entries: ${res}`);
@@ -67,7 +67,7 @@ export default function VVOD () {
     }, []);
 
     return (
-        <div className="flex min-h-screen items-center justify-center py-48">
+        <div className="flex min-h-screen items-center justify-center py-48 pt-0">
             <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-start px-16 sm:items-start">
                 <h1 style={{ marginBottom: '20px' }}>VVOD Games Played So Far</h1>
 
